@@ -1,5 +1,7 @@
 # A complete Flutter chat UI kit
 
+[![pub package](https://img.shields.io/pub/v/chat_ui_kit.svg)](https://pub.dev/packages/chat_ui_kit)
+
 This Flutter package provides you with a base structure as well as a set of tools that allow you to quickly build up a modern chat UI.
 Instead of trying to come up with all in one Widgets that meet everyone's expectations, you are given helpers that are meant to be used as examples and customized at will.
 
@@ -26,7 +28,7 @@ Instead of trying to come up with all in one Widgets that meet everyone's expect
 
 First add the following line to your pubspec.yaml dependencies:
 ```dart
-chat_ui_kit: ^1.0.0
+chat_ui_kit: ^[latest_version]
 ```
 
 Next, setup your models to extend the base models:
