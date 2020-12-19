@@ -55,7 +55,7 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
   }
 
   void onItemLongPress(BuildContext context, int index, T item) {
-    if (isSelectionModeActive) select(item);
+    if (!isSelectionModeActive) select(item);
   }
 
   ///************************************************* Selection management *************************************************************
