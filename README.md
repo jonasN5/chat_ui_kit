@@ -25,13 +25,13 @@ Instead of trying to come up with all in one Widgets that meet everyone's expect
 ## Getting Started
 
 First add the following line to your pubspec.yaml dependencies:
-```
+```dart
 chat_ui_kit: ^1.0.0
 ```
 
 Next, setup your models to extend the base models:
 
-```
+```dart
 class ChatMessage extends MessageBase {
   //...
 
@@ -55,7 +55,7 @@ class ChatMessage extends MessageBase {
 }
 ```
 
-```
+```dart
 class ChatUser extends UserBase {
   //...
 
@@ -70,7 +70,7 @@ class ChatUser extends UserBase {
 }
 ```
 
-```
+```dart
 class Chat extends ChatBase {
   
   //...
@@ -106,7 +106,7 @@ class Chat extends ChatBase {
 
 ## ChatsListScreen
 
-```
+```dart
 ChatsListController controller = ChatsListController();
 
 ChatsList(
@@ -143,7 +143,7 @@ void dispose() {
 
 ## ChatScreen
 
-```
+```dart
 final MessagesListController _controller = MessagesListController();
 
 @override
