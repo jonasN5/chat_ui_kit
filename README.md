@@ -1,6 +1,6 @@
 # A complete Flutter chat UI kit
 
-This package provides you with a base structure as well as a set of tools that allow you to quickly build up a modern chat UI.
+This Flutter package provides you with a base structure as well as a set of tools that allow you to quickly build up a modern chat UI.
 Instead of trying to come up with all in one Widgets that meet everyone's expectations, you are given helpers that are meant to be used as examples and customized at will.
 
 <p align="center">
