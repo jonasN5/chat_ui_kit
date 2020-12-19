@@ -4,7 +4,7 @@ This Flutter package provides you with a base structure as well as a set of tool
 Instead of trying to come up with all in one Widgets that meet everyone's expectations, you are given helpers that are meant to be used as examples and customized at will.
 
 <p align="center">
-<img src="docs/images/header.png">
+<img src="images/header.png">
 </p>
 
 
