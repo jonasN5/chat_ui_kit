@@ -177,41 +177,7 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
           messagePosition: _position),
     );
 
-    if (!_shouldBuildDate(item, index)) return child;
-    return Column(
-      children: [_BuildDate(item, widget.builders), child],
-    );
-  }
-
-  Widget _buildRemvedItem(
-      BuildContext context, Animation<double> animation, T item, int index) {
-    final int index = _items.indexOf(item);
-    final MessagePosition _position = _messagePosition(item, index);
-
-    if (widget.useCustomTile != null &&
-        widget.useCustomTile.call(index, item, _position))
-      return widget.builders.customTileBuilder
-          .call(context, animation, 0, item, _position);
-
-    final Widget child = SizeFadeTransition(
-      sizeFraction: 0.7,
-      curve: Curves.easeInOut,
-      animation: animation,
-      child: MessagesListTile(
-          item: item,
-          index: index,
-          controller: widget.controller,
-          appUserId: widget.appUserId,
-          builders: widget.builders,
-          style: widget.style ??
-              MessageStyle(
-                  padding: EdgeInsets.only(
-                      top: _topItemPadding(index, _position),
-                      bottom: _bottomItemPadding(index, _position))),
-          messagePosition: _position),
-    );
-
-    if (!_shouldBuildDate(item, index)) return child;
+    if (index == -1 || !_shouldBuildDate(item, index)) return child;
     return Column(
       children: [_BuildDate(item, widget.builders), child],
     );
@@ -229,7 +195,10 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
             // The current _items in the list.
             reverse: true,
             items: _items,
-            removeItemBuilder: _buildRemvedItem,
+            removeItemBuilder:
+                //pass -1 as an index to differentiate with normal buildItem
+                (BuildContext context, Animation<double> animation, T item) =>
+                    _buildItem(context, animation, item, -1),
             areItemsTheSame: (T a, T b) {
               if (widget.areItemsTheSame != null)
                 return widget.areItemsTheSame(a, b);

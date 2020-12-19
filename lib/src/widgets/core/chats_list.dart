@@ -69,20 +69,6 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
     setState(() {});
   }
 
-  Widget _buildRemovedItem(
-      BuildContext context, Animation<double> animation, T oldItem, int index) {
-    return FadeTransition(
-      opacity: animation,
-      child: ChatsListTile(
-          item: oldItem,
-          index: 0,
-          appUserId: widget.appUserId,
-          builders: widget.builders,
-          groupAvatarStyle: widget.groupAvatarStyle,
-          unreadBubbleEnabled: widget.unreadBubbleEnabled),
-    );
-  }
-
   Widget _buildItem(
       BuildContext context, Animation<double> animation, T item, int index) {
     // Specify a transition to be used by the ImplicitlyAnimatedList.
@@ -119,10 +105,6 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
             },
             // Called, as needed, to build list item .
             // List items are only built when they're scrolled into view.
-            itemBuilder: _buildItem,
-            // An optional builder when an item was removed from the list.
-            // If not specified, the List uses the itemBuilder with
-            // the animation reversed.
-            removeItemBuilder: _buildRemovedItem));
+            itemBuilder: _buildItem));
   }
 }
