@@ -100,7 +100,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     //or if no previous item exists and the current item is older than today
 
     return (previousDate == null && currentDate.isYesterdayOrOlder ||
-        previousDate.isBeforeAndDifferentDay(currentDate));
+        previousDate != null &&
+            previousDate.isBeforeAndDifferentDay(currentDate));
   }
 
   /// Default method to determine the padding above the tile
@@ -128,7 +129,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     if (widget.messagePosition != null)
       return widget.messagePosition.call(_items, item, index, _shouldBuildDate);
 
-    final T nextItem = index > 0 ? _items[index - 1] : null;
+    final T nextItem =
+        (index > 0 && _items.length >= index) ? _items[index - 1] : null;
     T previousItem;
     if (_shouldBuildDate(item, index)) {
       previousItem = null;

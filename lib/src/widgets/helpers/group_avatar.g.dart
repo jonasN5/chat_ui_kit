@@ -6,19 +6,19 @@ part of 'group_avatar.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-///build a separator
+/// Build a separator
 class _BuildSeparator extends StatelessWidget {
-  ///build a separator
+  /// Build a separator
   const _BuildSeparator(this.style, {Key key, this.width = 0, this.height = 0})
       : super(key: key);
 
-  ///build a separator
+  /// Build a separator
   final GroupAvatarStyle style;
 
-  ///build a separator
+  /// Build a separator
   final double width;
 
-  ///build a separator
+  /// Build a separator
   final double height;
 
   @override
@@ -26,19 +26,19 @@ class _BuildSeparator extends StatelessWidget {
       _buildSeparator(_context, style, width: width, height: height);
 }
 
-///build the group avatar itself
+/// Build the group avatar itself
 class _BuildGroupAvatar<T> extends StatelessWidget {
-  ///build the group avatar itself
+  /// Build the group avatar itself
   const _BuildGroupAvatar(this.style, this.items, this.builder, {Key key})
       : super(key: key);
 
-  ///build the group avatar itself
+  /// Build the group avatar itself
   final GroupAvatarStyle style;
 
-  ///build the group avatar itself
+  /// Build the group avatar itself
   final List<T> items;
 
-  ///build the group avatar itself
+  /// Build the group avatar itself
   final Widget Function(BuildContext, int, Size, List<dynamic>) builder;
 
   @override
@@ -46,22 +46,22 @@ class _BuildGroupAvatar<T> extends StatelessWidget {
       _buildGroupAvatar<T>(_context, style, items, builder);
 }
 
-///helper
+/// Helper
 class _BuildAvatar<T> extends StatelessWidget {
-  ///helper
+  /// Helper
   const _BuildAvatar(this.items, this.builder, this.index, this.size, {Key key})
       : super(key: key);
 
-  ///helper
+  /// Helper
   final List<T> items;
 
-  ///helper
+  /// Helper
   final Widget Function(BuildContext, int, Size, List<dynamic>) builder;
 
-  ///helper
+  /// Helper
   final int index;
 
-  ///helper
+  /// Helper
   final Size size;
 
   @override

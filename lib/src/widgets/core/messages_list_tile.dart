@@ -43,16 +43,16 @@ class MessageTileBuilders<T extends MessageBase> {
 }
 
 class IncomingMessageTileBuilders<T extends MessageBase> {
-  ///builder to display a widget in front of the body
-  ///typically build the user's avatar here
+  /// Builder to display a widget in front of the body;
+  /// Typically build the user's avatar here
   final MessageWidgetBuilder avatarBuilder;
 
-  ///builder to display a widget on top of the first message from the same user
-  ///typically build the user's username here
-  ///pass null to disable the default builder [_defaultIncomingMessageTileTitleBuilder]
+  /// Builder to display a widget on top of the first message from the same user.
+  /// Typically build the user's username here.
+  /// Pass null to disable the default builder [_defaultIncomingMessageTileTitleBuilder].
   final MessageWidgetBuilder titleBuilder;
 
-  ///override the default text widget and supply a complete widget (including container) using your own logic
+  /// Override the default text widget and supply a complete widget (including container) using your own logic
   final MessageWidgetBuilder bodyBuilder;
 
   const IncomingMessageTileBuilders(
@@ -62,7 +62,7 @@ class IncomingMessageTileBuilders<T extends MessageBase> {
 }
 
 class OutgoingMessageTileBuilders<T extends MessageBase> {
-  ///override the default text widget and supply a complete widget (including container) using your own logic
+  /// Override the default text widget and supply a complete widget (including container) using your own logic
   final MessageWidgetBuilder bodyBuilder;
 
   const OutgoingMessageTileBuilders({this.bodyBuilder});

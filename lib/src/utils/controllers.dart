@@ -42,6 +42,18 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeItem(T item) {
+    this._items.remove(item);
+    notifyListeners();
+  }
+
+  void removeItems(List<T> items) {
+    for (T item in items) {
+      this._items.remove(item);
+    }
+    notifyListeners();
+  }
+
   void updateById(T item) {
     final index = _items.indexWhere((element) => element.id == item.id);
     _items[index] = item;
@@ -65,7 +77,7 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
   List<T> get selectedItems => _selectedItems;
 
   final StreamController<SelectionEvent> _controller =
-      StreamController<SelectionEvent>.broadcast();
+  StreamController<SelectionEvent>.broadcast();
 
   /// Listen to this stream to catch any selection/unSelection events
   Stream<SelectionEvent> get selectionEventStream => _controller.stream;
@@ -74,7 +86,6 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
   bool get isSelectionModeActive => _selectedItems.isNotEmpty;
 
   bool isItemSelected(T item) {
-    print("${_selectedItems.contains(item)}");
     return _selectedItems.contains(item);
   }
 
