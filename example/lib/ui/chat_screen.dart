@@ -31,7 +31,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
-
   final ChatViewModel _model = ChatViewModel();
 
   final TextEditingController _textController = TextEditingController();
@@ -220,7 +219,8 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
   /// our [ChatMessage] is an event
   MessagePosition _messagePosition(List<MessageBase> items, MessageBase item,
       int index, bool Function(MessageBase item, int index) shouldBuildDate) {
-    ChatMessage nextItem = (index > 0 && items.length >= index) ? items[index - 1] : null;
+    ChatMessage nextItem =
+        (index > 0 && items.length >= index) ? items[index - 1] : null;
     ChatMessage previousItem;
 
     if (shouldBuildDate(item, index)) {

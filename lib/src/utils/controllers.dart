@@ -77,7 +77,7 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
   List<T> get selectedItems => _selectedItems;
 
   final StreamController<SelectionEvent> _controller =
-  StreamController<SelectionEvent>.broadcast();
+      StreamController<SelectionEvent>.broadcast();
 
   /// Listen to this stream to catch any selection/unSelection events
   Stream<SelectionEvent> get selectionEventStream => _controller.stream;

@@ -6,7 +6,6 @@ part of 'chat_screen.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-
 class _ChatMessageText extends StatelessWidget {
   const _ChatMessageText(
       this.index, this.message, this.messagePosition, this.messageFlow,

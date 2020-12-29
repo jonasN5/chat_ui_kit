@@ -36,7 +36,8 @@ class ChatWithMembers extends ChatBase {
   List<ChatUser> get membersWithoutSelf {
     List<ChatUser> membersWithoutSelf = [];
     for (ChatUser chatUser in members) {
-      if (AppConstants.LOCAL_USER_ID != chatUser.id) membersWithoutSelf.add(chatUser);
+      if (AppConstants.LOCAL_USER_ID != chatUser.id)
+        membersWithoutSelf.add(chatUser);
     }
     return membersWithoutSelf;
   }

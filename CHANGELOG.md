@@ -1,3 +1,7 @@
+## [1.1.1] - 29/12/2020
+
+* Apply pub changes
+
 ## [1.1.0] - 29/12/2020
 
 * Added an example app
