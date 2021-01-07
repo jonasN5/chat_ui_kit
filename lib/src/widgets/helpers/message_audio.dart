@@ -42,9 +42,10 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
     _audioPlayer.playerStateStream.listen((state) {
       if (state.processingState == ProcessingState.completed) {
         //pause & seek position 0
-        _audioPlayer.stop().then((e) {
-          if (mounted) setState(() {});
-        });
+        if (mounted) {
+          _audioPlayer.pause();
+          _audioPlayer.seek(Duration()).then((e) => setState(() {}));
+        }
       }
     });
 

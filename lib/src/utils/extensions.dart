@@ -11,6 +11,7 @@ extension DateHelpers on DateTime {
   }
 
   bool isBeforeAndDifferentDay(DateTime date) {
+    if (this == null || date == null) return false;
     return this.isBefore(date) &&
         (this.day != date.day ||
             this.month != date.month ||

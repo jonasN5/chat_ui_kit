@@ -56,9 +56,17 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
 
   void updateById(T item) {
     final index = _items.indexWhere((element) => element.id == item.id);
-    _items[index] = item;
-    notifyListeners();
+    if (index > -1) {
+      _items[index] = item;
+      notifyListeners();
+    }
   }
+
+  T getById(String id) {
+    return _items.firstWhere((element) => element.id == id, orElse: () => null);
+  }
+
+  void notifyChanges() => notifyListeners();
 
   ///************************************************* Action management *************************************************************
 
@@ -169,16 +177,24 @@ class ChatsListController<T extends ChatBase> extends ChangeNotifier {
   /// If [pushToEnd] is true, the item will be repositioned to the end of the list;
   void updateById(T item, {bool pushToStart = true, bool pushToEnd = false}) {
     final index = _items.indexWhere((element) => element.id == item.id);
-    if (pushToStart || pushToEnd) {
-      final item = _items.removeAt(index);
-      if (pushToStart) {
-        _items.insert(0, item);
+    if (index > -1) {
+      if (pushToStart || pushToEnd) {
+        final item = _items.removeAt(index);
+        if (pushToStart) {
+          _items.insert(0, item);
+        } else {
+          _items.add(item);
+        }
       } else {
-        _items.add(item);
+        _items[index] = item;
       }
-    } else {
-      _items[index] = item;
+      notifyListeners();
     }
-    notifyListeners();
   }
+
+  T getById(String id) {
+    return _items.firstWhere((element) => element.id == id, orElse: () => null);
+  }
+
+  void notifyChanges() => notifyListeners();
 }

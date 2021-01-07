@@ -62,11 +62,11 @@ class MessagesList<T extends MessageBase> extends StatefulWidget {
       useCustomTile;
 
   /// Pass a function to override the default [_messagePosition]
-  final MessagePosition Function(List<T> items, T item, int index,
-      bool Function(T item, int index) shouldBuildDate) messagePosition;
+  final MessagePosition Function(T previousItem, T currentItem, T nextItem,
+      bool Function(T currentItem) shouldBuildDate) messagePosition;
 
   /// Pass a function to override the default [_shouldBuildDate]
-  final bool Function(List<T> items, T item, int index) shouldBuildDate;
+  final bool Function(T currentItem) shouldBuildDate;
 
   @override
   _MessagesListState createState() => _MessagesListState();
@@ -87,18 +87,18 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
 
   /// Helper method to determine whether a date label should be shown.
   /// If true, [_buildDate] will be called
-  bool _shouldBuildDate(T item, int index) {
+  bool _shouldBuildDate(T currentItem) {
     if (widget.shouldBuildDate != null)
-      return widget.shouldBuildDate.call(_items, item, index);
+      return widget.shouldBuildDate.call(currentItem);
 
-    final DateTime currentDate = item.createdAt;
+    final int index = _items.indexOf(currentItem);
+    final DateTime currentDate = currentItem?.createdAt;
 
     final T previousItem = index + 1 < _items.length ? _items[index + 1] : null;
     final DateTime previousDate = previousItem?.createdAt;
 
     //build date if the previous item is older than the current item (and not same day)
     //or if no previous item exists and the current item is older than today
-
     return (previousDate == null && currentDate.isYesterdayOrOlder ||
         previousDate != null &&
             previousDate.isBeforeAndDifferentDay(currentDate));
@@ -125,36 +125,47 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
   }
 
   /// Helper method to determine the [MessagePosition]
-  MessagePosition _messagePosition(T item, int index) {
-    if (widget.messagePosition != null)
-      return widget.messagePosition.call(_items, item, index, _shouldBuildDate);
+  MessagePosition _messagePosition(T item) {
+    final currentItem = item;
+    //this will return the index in the new item list
+    final int index = _items.indexOf(currentItem);
 
     final T nextItem =
         (index > 0 && _items.length >= index) ? _items[index - 1] : null;
-    T previousItem;
-    if (_shouldBuildDate(item, index)) {
+
+    T previousItem = index + 1 < _items.length ? _items[index + 1] : null;
+
+    if (widget.messagePosition != null)
+      return widget.messagePosition
+          .call(previousItem, currentItem, nextItem, _shouldBuildDate);
+
+    if (_shouldBuildDate(currentItem)) {
       previousItem = null;
     } else {
       previousItem = index + 1 < _items.length ? _items[index + 1] : null;
     }
 
-    if (previousItem?.author?.id == item.author?.id &&
-        nextItem?.author?.id == item.author?.id) {
+    if (previousItem?.author?.id == currentItem?.author?.id &&
+        nextItem?.author?.id == currentItem?.author?.id) {
       return MessagePosition.surrounded;
-    } else if (previousItem?.author?.id == item.author?.id &&
-        nextItem?.author?.id != item.author?.id) {
+    } else if (previousItem?.author?.id == currentItem?.author?.id &&
+        nextItem?.author?.id != currentItem?.author?.id) {
       return MessagePosition.surroundedTop;
-    } else if (previousItem?.author?.id != item.author?.id &&
-        nextItem?.author?.id == item.author?.id) {
+    } else if (previousItem?.author?.id != currentItem?.author?.id &&
+        nextItem?.author?.id == currentItem?.author?.id) {
       return MessagePosition.surroundedBot;
     } else {
       return MessagePosition.isolated;
     }
   }
 
+  /// The item builder.
+  /// Be aware that [ImplicitlyAnimatedList] will call this builder to build new items as well
+  /// as update items. Therefore, the index passed can be the index in the old items list as
+  /// well as the index in the new items list.
   Widget _buildItem(
       BuildContext context, Animation<double> animation, T item, int index) {
-    final MessagePosition _position = _messagePosition(item, index);
+    final MessagePosition _position = _messagePosition(item);
 
     if (widget.useCustomTile != null &&
         widget.useCustomTile.call(index, item, _position))
@@ -179,7 +190,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
           messagePosition: _position),
     );
 
-    if (index == -1 || !_shouldBuildDate(item, index)) return child;
+    if (index == -1 || !_shouldBuildDate(item)) return child;
+
     return Column(
       children: [_BuildDate(item, widget.builders), child],
     );

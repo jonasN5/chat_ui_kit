@@ -217,29 +217,30 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
 
   /// Override [MessagePosition] to return [MessagePosition.isolated] when
   /// our [ChatMessage] is an event
-  MessagePosition _messagePosition(List<MessageBase> items, MessageBase item,
-      int index, bool Function(MessageBase item, int index) shouldBuildDate) {
-    ChatMessage nextItem =
-        (index > 0 && items.length >= index) ? items[index - 1] : null;
-    ChatMessage previousItem;
+  MessagePosition _messagePosition(
+      MessageBase previousItem,
+      MessageBase currentItem,
+      MessageBase nextItem,
+      bool Function(MessageBase currentItem) shouldBuildDate) {
+    ChatMessage _previousItem = previousItem;
+    final ChatMessage _currentItem = currentItem;
+    ChatMessage _nextItem = nextItem;
 
-    if (shouldBuildDate(item, index)) {
-      previousItem = null;
-    } else {
-      previousItem = index + 1 < items.length ? items[index + 1] : null;
+    if (shouldBuildDate(_currentItem)) {
+      _previousItem = null;
     }
 
-    if (nextItem?.isTypeEvent == true) nextItem = null;
-    if (previousItem?.isTypeEvent == true) previousItem = null;
+    if (_nextItem?.isTypeEvent == true) _nextItem = null;
+    if (_previousItem?.isTypeEvent == true) _previousItem = null;
 
-    if (previousItem?.author?.id == item.author?.id &&
-        nextItem?.author?.id == item.author?.id) {
+    if (_previousItem?.author?.id == _currentItem?.author?.id &&
+        _nextItem?.author?.id == _currentItem?.author?.id) {
       return MessagePosition.surrounded;
-    } else if (previousItem?.author?.id == item.author?.id &&
-        nextItem?.author?.id != item.author?.id) {
+    } else if (_previousItem?.author?.id == _currentItem?.author?.id &&
+        _nextItem?.author?.id != _currentItem?.author?.id) {
       return MessagePosition.surroundedTop;
-    } else if (previousItem?.author?.id != item.author?.id &&
-        nextItem?.author?.id == item.author?.id) {
+    } else if (_previousItem?.author?.id != _currentItem?.author?.id &&
+        _nextItem?.author?.id == _currentItem?.author?.id) {
       return MessagePosition.surroundedBot;
     } else {
       return MessagePosition.isolated;

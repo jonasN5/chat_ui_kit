@@ -37,22 +37,20 @@ class GroupAvatarStyle {
   /// The size of this widget
   final double size;
 
-  const GroupAvatarStyle(
-      {this.size = 56.0,
-      this.shape = GroupAvatarShape.rectangle,
-      this.borderRadius = 20.0,
-      this.withSeparator = false,
-      this.separatorColor,
-      this.separatorThickness = 1.5});
+  const GroupAvatarStyle({this.size = 56.0,
+    this.shape = GroupAvatarShape.rectangle,
+    this.borderRadius = 20.0,
+    this.withSeparator = false,
+    this.separatorColor,
+    this.separatorThickness = 1.5});
 }
 
 /// A widget the display multiple avatars inside a single widget
 class GroupAvatar<T> extends StatelessWidget {
-  GroupAvatar(
-      {Key key,
-      @required this.items,
-      @required this.builder,
-      GroupAvatarStyle style})
+  GroupAvatar({Key key,
+    @required this.items,
+    @required this.builder,
+    GroupAvatarStyle style})
       : style = style ?? GroupAvatarStyle(),
         super(key: key);
 
@@ -76,10 +74,10 @@ class GroupAvatar<T> extends StatelessWidget {
     return style.shape == GroupAvatarShape.circle
         ? ClipOval(clipBehavior: Clip.antiAlias, child: child)
         : ClipRRect(
-            child: child,
-            clipBehavior: Clip.antiAlias,
-            borderRadius:
-                BorderRadius.all(Radius.circular(style.borderRadius)));
+        child: child,
+        clipBehavior: Clip.antiAlias,
+        borderRadius:
+        BorderRadius.all(Radius.circular(style.borderRadius)));
   }
 }
 
@@ -90,7 +88,9 @@ Widget _buildSeparator(BuildContext context, GroupAvatarStyle style,
   return Container(
       width: width,
       height: height,
-      color: style.separatorColor ?? Theme.of(context).backgroundColor);
+      color: style.separatorColor ?? Theme
+          .of(context)
+          .backgroundColor);
 }
 
 /// Build the group avatar itself
@@ -130,7 +130,8 @@ Widget _buildGroupAvatar<T>(BuildContext context, GroupAvatarStyle style,
                     (style.size - separatorSize) / 2)),
             if (style.withSeparator)
               _BuildSeparator(style,
-                  width: style.size / 2, height: style.separatorThickness),
+                  width: (style.size - separatorSize) / 2,
+                  height: style.separatorThickness),
             _BuildAvatar(
                 items,
                 builder,
@@ -144,16 +145,17 @@ Widget _buildGroupAvatar<T>(BuildContext context, GroupAvatarStyle style,
   }
   //4 or more
   final Size _size =
-      Size((style.size - separatorSize) / 2, (style.size - separatorSize) / 2);
+  Size((style.size - separatorSize) / 2, (style.size - separatorSize) / 2);
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisSize: MainAxisSize.min,
     children: [
       Row(
         children: [
           _BuildAvatar(items, builder, 0, _size),
           if (style.withSeparator)
             _BuildSeparator(style,
-                width: style.separatorThickness, height: style.size / 2),
+                width: style.separatorThickness, height: _size.height),
           _BuildAvatar(items, builder, 1, _size)
         ],
       ),
@@ -165,7 +167,7 @@ Widget _buildGroupAvatar<T>(BuildContext context, GroupAvatarStyle style,
           _BuildAvatar(items, builder, 2, _size),
           if (style.withSeparator)
             _BuildSeparator(style,
-                width: style.separatorThickness, height: style.size / 2),
+                width: style.separatorThickness, height: _size.height),
           _BuildAvatar(items, builder, 3, _size)
         ],
       )

@@ -46,6 +46,7 @@ abstract class MessageInputTypingHandler {
       });
     } else {
       //text changed to nothing, emit stop event
+      _isTyping = false;
       if (typingCallback != null) typingCallback(TypingEvent.stop);
     }
   }
