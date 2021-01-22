@@ -159,7 +159,7 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
   Widget _buildMidSection(BuildContext context) {
     if (builders.midSection != null)
       return builders.midSection.call(context, index, item);
-    final date = item.lastMessage.createdAt;
+    final date = item.lastMessage?.createdAt;
 
     //build the title
     final Widget title = builders.titleBuilder != null
@@ -174,26 +174,30 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold)
                           : TextStyle(fontWeight: FontWeight.bold))),
-              builders.dateBuilder != null
-                  ? builders.dateBuilder.call(context, date)
-                  : Text(DateFormatter.getVerboseDateTimeRepresentation(
-                      context, date))
+              if (date != null)
+                builders.dateBuilder != null
+                    ? builders.dateBuilder.call(context, date)
+                    : Text(DateFormatter.getVerboseDateTimeRepresentation(
+                        context, date))
             ],
           );
 
-    //build the last message
-    final Widget lastMessage = builders.lastMessageBuilder != null
-        ? builders.lastMessageBuilder.call(context, index, item)
-        : Padding(
-            padding: EdgeInsets.only(top: 8),
-            child:
-                Text(item.lastMessage.text, overflow: TextOverflow.ellipsis));
+    Widget lastMessage;
+    if (item.lastMessage != null) {
+      //build the last message
+      lastMessage = builders.lastMessageBuilder != null
+          ? builders.lastMessageBuilder.call(context, index, item)
+          : Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Text(item.lastMessage?.text,
+                  overflow: TextOverflow.ellipsis));
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [title, lastMessage],
+      children: [title, if (item.lastMessage != null) lastMessage],
     );
   }
 

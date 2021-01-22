@@ -9,15 +9,16 @@ import 'package:chat_ui_kit/src/widgets/core/chats_list_tile.dart';
 import 'package:chat_ui_kit/src/widgets/helpers/group_avatar.dart';
 
 class ChatsList<T extends ChatBase> extends StatefulWidget {
-  ChatsList({Key key,
-    @required this.controller,
-    @required this.appUserId,
-    this.areItemsTheSame,
-    //this.chatsListStyle = const ChatsListStyle(),
-    this.groupAvatarStyle,
-    this.unreadBubbleEnabled = true,
-    @required this.builders,
-    this.scrollHandler})
+  ChatsList(
+      {Key key,
+      @required this.controller,
+      @required this.appUserId,
+      this.areItemsTheSame,
+      //this.chatsListStyle = const ChatsListStyle(),
+      this.groupAvatarStyle,
+      this.unreadBubbleEnabled = true,
+      @required this.builders,
+      this.scrollHandler})
       : super(key: key);
 
   /// The controller that manages items and actions
@@ -68,8 +69,8 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
     setState(() {});
   }
 
-  Widget _buildItem(BuildContext context, Animation<double> animation, T item,
-      int index) {
+  Widget _buildItem(
+      BuildContext context, Animation<double> animation, T item, int index) {
     // Specify a transition to be used by the ImplicitlyAnimatedList.
     // See the Transitions section on how to import this transition.
     return SizeFadeTransition(
@@ -95,7 +96,7 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
           return;
         },
         child: ImplicitlyAnimatedList<T>(
-          // The current items in the list.
+            // The current items in the list.
             items: widget.controller.items,
             areItemsTheSame: (T a, T b) {
               if (widget.areItemsTheSame != null)

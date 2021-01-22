@@ -1,3 +1,7 @@
+## [1.1.3] - 22/01/2020
+
+* LastMessage can now be null
+
 ## [1.1.2] - 07/01/2020
 
 * Fixed a bug where the typing event would not be emitted after deleting a message
