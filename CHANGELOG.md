@@ -1,3 +1,9 @@
+## [1.1.4] - 24/02/2020
+
+* Fixed a bug where ChatsListController.updateById would not update the item
+* Style is now correctly passed from MessagesListTile to IncomingMessage
+* Increased the default unread messages bubble padding to make it more readable
+
 ## [1.1.3] - 22/01/2020
 
 * LastMessage can now be null
