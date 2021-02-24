@@ -140,7 +140,7 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle),
               child: Padding(
-                  padding: EdgeInsets.all(2),
+                  padding: EdgeInsets.all(4),
                   child: Text(
                     item.unreadCount.toString(),
                     style: TextStyle(
