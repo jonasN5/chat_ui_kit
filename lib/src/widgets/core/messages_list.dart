@@ -118,7 +118,6 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
   /// It will vary depending on the [MessagePosition]
   double _bottomItemPadding(int index, MessagePosition messagePosition) {
     double padding = 8.0;
-    if (index == 0) return 0;
     if (messagePosition == MessagePosition.surrounded ||
         messagePosition == MessagePosition.surroundedBot) return 1.0;
     return padding;
@@ -185,6 +184,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
           style: widget.style ??
               MessageStyle(
                   padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
                       top: _topItemPadding(index, _position),
                       bottom: _bottomItemPadding(index, _position))),
           messagePosition: _position),
