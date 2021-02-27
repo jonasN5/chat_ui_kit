@@ -195,24 +195,22 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
             titleBuilder: null);
 
     return Expanded(
-        child: Padding(
-            padding: EdgeInsets.all(16),
-            child: MessagesList(
-                controller: _controller,
-                appUserId: _currentUser.id,
-                useCustomTile: (i, item, pos) {
-                  final msg = item as ChatMessage;
-                  return msg.isTypeEvent;
-                },
-                messagePosition: _messagePosition,
-                builders: MessageTileBuilders(
-                    customTileBuilder: _buildEventMessage,
-                    customDateBuilder: _buildDate,
-                    incomingMessageBuilders: incomingBuilders,
-                    outgoingMessageBuilders: OutgoingMessageTileBuilders(
-                        bodyBuilder: (context, index, item, messagePosition) =>
-                            _buildMessageBody(context, index, item,
-                                messagePosition, MessageFlow.outgoing))))));
+        child: MessagesList(
+            controller: _controller,
+            appUserId: _currentUser.id,
+            useCustomTile: (i, item, pos) {
+              final msg = item as ChatMessage;
+              return msg.isTypeEvent;
+            },
+            messagePosition: _messagePosition,
+            builders: MessageTileBuilders(
+                customTileBuilder: _buildEventMessage,
+                customDateBuilder: _buildDate,
+                incomingMessageBuilders: incomingBuilders,
+                outgoingMessageBuilders: OutgoingMessageTileBuilders(
+                    bodyBuilder: (context, index, item, messagePosition) =>
+                        _buildMessageBody(context, index, item, messagePosition,
+                            MessageFlow.outgoing)))));
   }
 
   /// Override [MessagePosition] to return [MessagePosition.isolated] when
