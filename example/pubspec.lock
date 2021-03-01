@@ -112,7 +112,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.1.5"
+    version: "1.1.6"
   checked_yaml:
     dependency: transitive
     description:

@@ -1,3 +1,8 @@
+## [1.1.6] - 01/03/2020
+
+* Move chat padding from top level to message level to make item selection cover the whole screen width
+* Updated documentation to reflect the change
+
 ## [1.1.5] - 24/02/2020
 
 * Increased the default unread messages bubble padding to make it more readable
