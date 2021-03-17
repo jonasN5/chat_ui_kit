@@ -1,3 +1,7 @@
+## [1.1.7] - 17/03/2020
+
+* Added the possibility to display the GroupAvatar images in stacked circles, for a more modern UI. Check out GroupAvatarMode.stackedCircles.
+
 ## [1.1.6] - 01/03/2020
 
 * Move chat padding from top level to message level to make item selection cover the whole screen width

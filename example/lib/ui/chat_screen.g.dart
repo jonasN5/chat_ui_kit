@@ -6,18 +6,24 @@ part of 'chat_screen.dart';
 // FunctionalWidgetGenerator
 // **************************************************************************
 
+///************************************************ Functional widgets used in the screen ***************************************
 class _ChatMessageText extends StatelessWidget {
+  ///************************************************ Functional widgets used in the screen ***************************************
   const _ChatMessageText(
       this.index, this.message, this.messagePosition, this.messageFlow,
       {Key key})
       : super(key: key);
 
+  ///************************************************ Functional widgets used in the screen ***************************************
   final int index;
 
+  ///************************************************ Functional widgets used in the screen ***************************************
   final ChatMessage message;
 
+  ///************************************************ Functional widgets used in the screen ***************************************
   final MessagePosition messagePosition;
 
+  ///************************************************ Functional widgets used in the screen ***************************************
   final MessageFlow messageFlow;
 
   @override
