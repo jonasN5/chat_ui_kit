@@ -13,18 +13,18 @@ import 'package:flutter/material.dart';
 class ChatMessageImage extends StatelessWidget {
   const ChatMessageImage(
       this.index, this.message, this.messagePosition, this.messageFlow,
-      {Key key, this.callback})
+      {Key? key, this.callback})
       : super(key: key);
 
   final int index;
 
   final MessageBase message;
 
-  final MessagePosition messagePosition;
+  final MessagePosition? messagePosition;
 
   final MessageFlow messageFlow;
 
-  final void Function() callback;
+  final void Function()? callback;
 
   @override
   Widget build(BuildContext context) {

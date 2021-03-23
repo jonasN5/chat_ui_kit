@@ -12,7 +12,7 @@ class _BuildStackedGroupAvatar<T> extends StatelessWidget {
   /// ***************************************************************** For GroupAvatarMode.stacked ************************************************************************
   /// Build the stacked group avatar itself
   const _BuildStackedGroupAvatar(this.style, this.items, this.builder,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   /// ***************************************************************** For GroupAvatarMode.stacked ************************************************************************
@@ -37,7 +37,7 @@ class _BuildStackedAvatar<T> extends StatelessWidget {
   /// Helper
   const _BuildStackedAvatar(
       this.items, this.builder, this.index, this.size, this.border,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   /// Helper
@@ -53,7 +53,7 @@ class _BuildStackedAvatar<T> extends StatelessWidget {
   final double size;
 
   /// Helper
-  final Border border;
+  final Border? border;
 
   @override
   Widget build(BuildContext _context) =>
@@ -65,7 +65,7 @@ class _BuildStackedAvatar<T> extends StatelessWidget {
 class _BuildSeparator extends StatelessWidget {
   /// ***************************************************************** For GroupAvatarMode.aligned ************************************************************************
   /// Build a separator
-  const _BuildSeparator(this.style, {Key key, this.width = 0, this.height = 0})
+  const _BuildSeparator(this.style, {Key? key, this.width = 0, this.height = 0})
       : super(key: key);
 
   /// ***************************************************************** For GroupAvatarMode.aligned ************************************************************************
@@ -89,7 +89,7 @@ class _BuildSeparator extends StatelessWidget {
 class _BuildAlignedGroupAvatar<T> extends StatelessWidget {
   /// Build the aligned group avatar itself
   const _BuildAlignedGroupAvatar(this.style, this.items, this.builder,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   /// Build the aligned group avatar itself
@@ -110,7 +110,7 @@ class _BuildAlignedGroupAvatar<T> extends StatelessWidget {
 class _BuildAlignedAvatar<T> extends StatelessWidget {
   /// Helper
   const _BuildAlignedAvatar(this.items, this.builder, this.index, this.size,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   /// Helper

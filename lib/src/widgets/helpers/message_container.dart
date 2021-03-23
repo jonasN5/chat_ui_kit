@@ -9,12 +9,12 @@ class MessageContainer extends StatelessWidget {
 
   final EdgeInsets padding;
 
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
 
-  final BoxConstraints constraints;
+  final BoxConstraints? constraints;
 
   MessageContainer(
-      {@required this.child,
+      {required this.child,
       this.padding = const EdgeInsets.all(8),
       this.decoration,
       this.constraints});
@@ -32,10 +32,10 @@ class MessageContainer extends StatelessWidget {
 }
 
 BoxDecoration messageDecoration(BuildContext context,
-    {Color color,
+    {Color? color,
     double radius = 8.0,
     double tightRadius = 0.0,
-    MessagePosition messagePosition = MessagePosition.isolated,
+    MessagePosition? messagePosition = MessagePosition.isolated,
     MessageFlow messageFlow = MessageFlow.outgoing}) {
   double topLeftRadius;
   double topRightRadius;

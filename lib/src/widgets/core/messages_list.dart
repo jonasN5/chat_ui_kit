@@ -14,11 +14,11 @@ import 'package:chat_ui_kit/src/models/message_base.dart';
 
 part 'messages_list.g.dart';
 
-class MessagesList<T extends MessageBase> extends StatefulWidget {
+class MessagesList<T extends MessageBase?> extends StatefulWidget {
   MessagesList(
-      {Key key,
-      @required this.controller,
-      @required this.appUserId,
+      {Key? key,
+      required this.controller,
+      required this.appUserId,
       this.areItemsTheSame,
       this.scrollHandler,
       this.style,
@@ -39,7 +39,7 @@ class MessagesList<T extends MessageBase> extends StatefulWidget {
 
   /// Called by the DiffUtil to decide whether two object represent the same Item.
   /// By default, this will check whether oldItem.id == newItem.id;
-  final bool Function(T oldItem, T newItem) areItemsTheSame;
+  final bool Function(T oldItem, T newItem)? areItemsTheSame;
 
   /// Scrolling will trigger [NotificationListener], which will call this handler.
   /// Typically looks like this:
@@ -47,26 +47,26 @@ class MessagesList<T extends MessageBase> extends StatefulWidget {
   ///   if (scroll.metrics.pixels == scroll.metrics.maxScrollExtent)
   ///     _getMoreChats();
   /// }
-  final Function(ScrollNotification scroll) scrollHandler;
+  final Function(ScrollNotification scroll)? scrollHandler;
 
   /// Provide your custom builders to override the default behaviour
   final MessageTileBuilders builders;
 
   /// Custom styling you want to apply to the messages
-  final MessageStyle style;
+  final MessageStyle? style;
 
   /// Pass a function to test whether [builders.customTileBuilder] should be called.
   /// The typical use case is to call the custom builder when you have
   /// event types messages (user joined chat, renaming chat etc.).
-  final bool Function(int index, T item, MessagePosition messagePosition)
+  final bool Function(int index, T item, MessagePosition messagePosition)?
       useCustomTile;
 
   /// Pass a function to override the default [_messagePosition]
   final MessagePosition Function(T previousItem, T currentItem, T nextItem,
-      bool Function(T currentItem) shouldBuildDate) messagePosition;
+      bool Function(T currentItem) shouldBuildDate)? messagePosition;
 
   /// Pass a function to override the default [_shouldBuildDate]
-  final bool Function(T currentItem) shouldBuildDate;
+  final bool Function(T currentItem)? shouldBuildDate;
 
   @override
   _MessagesListState createState() => _MessagesListState();
@@ -83,19 +83,20 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     setState(() {});
   }
 
-  List<T> get _items => widget.controller.items;
+  List<T> get _items => widget.controller.items as List<T>;
 
   /// Helper method to determine whether a date label should be shown.
   /// If true, [_buildDate] will be called
   bool _shouldBuildDate(T currentItem) {
     if (widget.shouldBuildDate != null)
-      return widget.shouldBuildDate.call(currentItem);
+      return widget.shouldBuildDate!.call(currentItem);
 
     final int index = _items.indexOf(currentItem);
-    final DateTime currentDate = currentItem?.createdAt;
+    final DateTime currentDate = currentItem.createdAt;
 
-    final T previousItem = index + 1 < _items.length ? _items[index + 1] : null;
-    final DateTime previousDate = previousItem?.createdAt;
+    final T? previousItem =
+        index + 1 < _items.length ? _items[index + 1] : null;
+    final DateTime? previousDate = previousItem?.createdAt;
 
     //build date if the previous item is older than the current item (and not same day)
     //or if no previous item exists and the current item is older than today
@@ -129,14 +130,14 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     //this will return the index in the new item list
     final int index = _items.indexOf(currentItem);
 
-    final T nextItem =
+    final T? nextItem =
         (index > 0 && _items.length >= index) ? _items[index - 1] : null;
 
-    T previousItem = index + 1 < _items.length ? _items[index + 1] : null;
+    T? previousItem = index + 1 < _items.length ? _items[index + 1] : null;
 
     if (widget.messagePosition != null)
-      return widget.messagePosition
-          .call(previousItem, currentItem, nextItem, _shouldBuildDate);
+      return widget.messagePosition!.call(previousItem, currentItem, nextItem,
+          _shouldBuildDate as bool Function(MessageBase?));
 
     if (_shouldBuildDate(currentItem)) {
       previousItem = null;
@@ -144,14 +145,14 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
       previousItem = index + 1 < _items.length ? _items[index + 1] : null;
     }
 
-    if (previousItem?.author?.id == currentItem?.author?.id &&
-        nextItem?.author?.id == currentItem?.author?.id) {
+    if (previousItem?.author?.id == currentItem.author?.id &&
+        nextItem?.author?.id == currentItem.author?.id) {
       return MessagePosition.surrounded;
-    } else if (previousItem?.author?.id == currentItem?.author?.id &&
-        nextItem?.author?.id != currentItem?.author?.id) {
+    } else if (previousItem?.author?.id == currentItem.author?.id &&
+        nextItem?.author?.id != currentItem.author?.id) {
       return MessagePosition.surroundedTop;
-    } else if (previousItem?.author?.id != currentItem?.author?.id &&
-        nextItem?.author?.id == currentItem?.author?.id) {
+    } else if (previousItem?.author?.id != currentItem.author?.id &&
+        nextItem?.author?.id == currentItem.author?.id) {
       return MessagePosition.surroundedBot;
     } else {
       return MessagePosition.isolated;
@@ -167,8 +168,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     final MessagePosition _position = _messagePosition(item);
 
     if (widget.useCustomTile != null &&
-        widget.useCustomTile.call(index, item, _position))
-      return widget.builders.customTileBuilder
+        widget.useCustomTile!.call(index, item, _position))
+      return widget.builders.customTileBuilder!
           .call(context, animation, index, item, _position);
 
     final Widget child = SizeFadeTransition(
@@ -203,10 +204,11 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     // Specify the generic type of the data in the list.
     return NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scroll) {
-          if (widget.scrollHandler != null) widget.scrollHandler.call(scroll);
+          if (widget.scrollHandler != null) widget.scrollHandler!.call(scroll);
           return;
-        },
+        } as bool Function(ScrollNotification)?,
         child: ImplicitlyAnimatedList<T>(
+            physics: widget.style?.physics,
             // The current _items in the list.
             reverse: true,
             items: _items,
@@ -214,10 +216,10 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
                 //pass -1 as an index to differentiate with normal buildItem
                 (BuildContext context, Animation<double> animation, T item) =>
                     _buildItem(context, animation, item, -1),
-            areItemsTheSame: (T a, T b) {
+            areItemsTheSame: (T? a, T? b) {
               if (widget.areItemsTheSame != null)
-                return widget.areItemsTheSame(a, b);
-              return a.id == b.id;
+                return widget.areItemsTheSame!(a, b);
+              return a!.id == b!.id;
             },
             // Called, as needed, to build list item .
             // List _items are only built when they're scrolled into view.
@@ -227,8 +229,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
 
 @swidget
 Widget _buildDate<T extends MessageBase>(
-    BuildContext context, T item, MessageTileBuilders builders) {
+    BuildContext context, T item, MessageTileBuilders? builders) {
   if (builders?.customDateBuilder != null)
-    return builders.customDateBuilder.call(context, item.createdAt);
+    return builders!.customDateBuilder!.call(context, item.createdAt);
   return DateLabel(date: item.createdAt);
 }

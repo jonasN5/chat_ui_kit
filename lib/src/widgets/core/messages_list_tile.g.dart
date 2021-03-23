@@ -7,7 +7,7 @@ part of 'messages_list_tile.dart';
 // **************************************************************************
 
 class MessageFooter<T extends MessageBase> extends StatelessWidget {
-  const MessageFooter(this.item, {Key key}) : super(key: key);
+  const MessageFooter(this.item, {Key? key}) : super(key: key);
 
   final T item;
 

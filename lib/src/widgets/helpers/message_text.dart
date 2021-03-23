@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 class ChatMessageText extends StatelessWidget {
   const ChatMessageText(
       this.index, this.message, this.messagePosition, this.messageFlow,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   final int index;
 
   final MessageBase message;
 
-  final MessagePosition messagePosition;
+  final MessagePosition? messagePosition;
 
   final MessageFlow messageFlow;
 
@@ -26,7 +26,7 @@ class ChatMessageText extends StatelessWidget {
         decoration: messageDecoration(context,
             messagePosition: messagePosition, messageFlow: messageFlow),
         child: Wrap(alignment: WrapAlignment.end, children: [
-          Text(message.text, style: TextStyle(color: Colors.black)),
+          Text(message.text ?? "", style: TextStyle(color: Colors.black)),
           MessageFooter(message)
         ]));
   }

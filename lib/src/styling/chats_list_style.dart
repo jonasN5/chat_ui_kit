@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:chat_ui_kit/src/widgets/core/chats_list.dart';
 
-/// Example class for styling
+/// Styling and settings for [ChatsList].
 class ChatsListStyle {
-  final Color color;
+  /// [ScrollPhysics] parameter for the list of chats.
+  /// Defaults to platform default.
+  final ScrollPhysics? physics;
 
-  const ChatsListStyle({this.color});
+  const ChatsListStyle({this.physics});
 }

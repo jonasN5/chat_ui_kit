@@ -45,26 +45,28 @@ class _ChatsScreenSate extends State<ChatsScreen> {
   void onItemLongPressed(ChatWithMembers chat) {
     showDialog(
         context: context,
-        child: AlertDialog(
-            content: Text(
-                "This chat and any related message will be deleted permanently."),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    //delete in DB, from the current list in memory and update UI
-                    _model.controller.removeItem(chat);
-                  },
-                  child: Text("ok")),
-              Padding(
-                padding: EdgeInsets.only(left: 16),
-                child: TextButton(
+        builder: (_) {
+          return AlertDialog(
+              content: Text(
+                  "This chat and any related message will be deleted permanently."),
+              actions: [
+                TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      //delete in DB, from the current list in memory and update UI
+                      _model.controller.removeItem(chat);
                     },
-                    child: Text("cancel")),
-              ),
-            ]));
+                    child: Text("ok")),
+                Padding(
+                  padding: EdgeInsets.only(left: 16),
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("cancel")),
+                ),
+              ]);
+        });
   }
 
   /// Build the last message depending on how many members the Chat has

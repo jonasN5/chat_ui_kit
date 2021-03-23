@@ -3,12 +3,12 @@ import 'package:intl/intl.dart';
 
 class DateLabel extends StatelessWidget {
   DateLabel({
-    @required this.date,
+    required this.date,
     this.dateFormat,
   });
 
   final DateTime date;
-  final DateFormat dateFormat;
+  final DateFormat? dateFormat;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class DateLabel extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Text(
         dateFormat != null
-            ? dateFormat.format(date)
+            ? dateFormat!.format(date)
             : DateFormat('yyyy-MMM-dd').format(date),
         style: TextStyle(
           color: Colors.white,

@@ -1,3 +1,8 @@
+## [1.2.0] - 23/03/2020
+
+* Migrated to null safety
+* Exposed ScrollPhysics parameter for ChatsList and MessagesList
+
 ## [1.1.7] - 17/03/2020
 
 * Added the possibility to display the GroupAvatar images in stacked circles, for a more modern UI. Check out GroupAvatarMode.stackedCircles.

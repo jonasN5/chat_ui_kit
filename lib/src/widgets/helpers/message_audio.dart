@@ -11,7 +11,7 @@ import 'package:just_audio/just_audio.dart';
 class ChatMessageAudio extends StatefulWidget {
   final int index;
   final MessageBase message;
-  final MessagePosition messagePosition;
+  final MessagePosition? messagePosition;
   final MessageFlow messageFlow;
 
   ChatMessageAudio(
@@ -22,9 +22,9 @@ class ChatMessageAudio extends StatefulWidget {
 }
 
 class _ChatMessageAudioState extends State<ChatMessageAudio> {
-  AudioPlayer _audioPlayer;
-  Future<Duration> _duration;
-  Duration _position;
+  AudioPlayer? _audioPlayer;
+  Future<Duration?>? _duration;
+  Duration? _position;
 
   Duration get _timeLeft {
     final Duration _totalDuration = _audioPlayer?.duration ?? Duration();
@@ -37,19 +37,19 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
   @override
   void initState() {
     _audioPlayer = AudioPlayer();
-    _duration = _audioPlayer.setFilePath(widget.message.url);
+    _duration = _audioPlayer!.setFilePath(widget.message.url);
 
-    _audioPlayer.playerStateStream.listen((state) {
+    _audioPlayer!.playerStateStream.listen((state) {
       if (state.processingState == ProcessingState.completed) {
         //pause & seek position 0
         if (mounted) {
-          _audioPlayer.pause();
-          _audioPlayer.seek(Duration()).then((e) => setState(() {}));
+          _audioPlayer!.pause();
+          _audioPlayer!.seek(Duration()).then((e) => setState(() {}));
         }
       }
     });
 
-    _audioPlayer.positionStream.listen((event) {
+    _audioPlayer!.positionStream.listen((event) {
       if (mounted)
         setState(() {
           _position = event;
@@ -62,15 +62,15 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
   /// -seek the new value in the audio file
   /// -play the audio file if it was paused/not started
   void onSliderValueChanged(double milliseconds) {
-    _audioPlayer.seek(Duration(milliseconds: milliseconds.toInt()));
-    _audioPlayer.play();
+    _audioPlayer!.seek(Duration(milliseconds: milliseconds.toInt()));
+    _audioPlayer!.play();
   }
 
   void onPlayPausePressed() {
-    if (_audioPlayer.playing) {
-      _audioPlayer.pause();
+    if (_audioPlayer!.playing) {
+      _audioPlayer!.pause();
     } else {
-      _audioPlayer.play();
+      _audioPlayer!.play();
     }
   }
 
@@ -80,9 +80,9 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
         future: _duration,
         builder: (BuildContext context, snapshot) {
           Widget _durationWidget;
-          final Duration _dur = snapshot.data;
+          final _dur = snapshot.data as Duration?;
           if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data != null) {
+              _dur != null) {
             _durationWidget = Text(_timeLeft.verboseDuration,
                 style: TextStyle(color: Colors.black));
           } else {
@@ -111,7 +111,7 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
                       child: Padding(
                           padding: EdgeInsets.only(right: 8),
                           child: Icon(
-                              _audioPlayer.playing
+                              _audioPlayer!.playing
                                   ? Icons.pause
                                   : Icons.play_arrow,
                               size: 48,
@@ -131,9 +131,9 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
                               padding: EdgeInsets.only(left: 8),
                               child: Slider.adaptive(
                                   value:
-                                      _position?.inMilliseconds?.toDouble() ??
+                                      _position?.inMilliseconds.toDouble() ??
                                           0,
-                                  max: _dur?.inMilliseconds?.toDouble() ?? 0,
+                                  max: _dur?.inMilliseconds.toDouble() ?? 0,
                                   onChanged: onSliderValueChanged))),
                       Align(alignment: Alignment.bottomCenter, child: _footer)
                     ],
@@ -145,7 +145,7 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    _audioPlayer!.dispose();
     super.dispose();
   }
 }

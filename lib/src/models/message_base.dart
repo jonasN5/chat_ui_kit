@@ -8,13 +8,13 @@ abstract class MessageBase {
   String get id;
 
   /// Actual text message.
-  String get text;
+  String? get text;
 
   /// Date at which the message has been created at
   DateTime get createdAt;
 
   /// The author of this message
-  UserBase get author;
+  UserBase? get author;
 
   /// Helper method to check whether the message is from the app user
   bool isFromAppUser(String appUserId) => author?.id == appUserId;

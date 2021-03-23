@@ -18,21 +18,21 @@ class OutgoingMessage<T extends MessageBase> extends StatelessWidget {
   final OutgoingMessageTileBuilders builders;
 
   /// The message's position relative to other messages
-  final MessagePosition messagePosition;
+  final MessagePosition? messagePosition;
 
   OutgoingMessage(
-      {Key key,
-      @required this.item,
-      @required this.index,
-      OutgoingMessageTileBuilders builders,
+      {Key? key,
+      required this.item,
+      required this.index,
+      OutgoingMessageTileBuilders? builders,
       this.messagePosition = MessagePosition.isolated})
       : builders = builders ?? const OutgoingMessageTileBuilders(),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (builders?.bodyBuilder != null)
-      return builders.bodyBuilder.call(context, index, item, messagePosition);
+    if (builders.bodyBuilder != null)
+      return builders.bodyBuilder!.call(context, index, item, messagePosition);
 
     Widget _child;
     if (item.messageType == MessageBaseType.text) {

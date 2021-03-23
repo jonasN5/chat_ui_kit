@@ -4,6 +4,7 @@ import 'package:chat_ui_kit/src/models/chat_base.dart';
 import 'package:chat_ui_kit/src/models/message_base.dart';
 import 'package:chat_ui_kit/src/utils/enums.dart';
 import 'package:chat_ui_kit/src/utils/selection_event.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 
 /// A class that manages the item list; as such, this class should be the only one holding the list of items it controls
@@ -14,7 +15,7 @@ import 'package:flutter/material.dart';
 /// Listen to [selectionEventStream] to catch any selection event [SelectionEvent].
 /// Make sure to call [MessagesListController.dispose] when disposing the widget.
 class MessagesListController<T extends MessageBase> extends ChangeNotifier {
-  MessagesListController({List<T> items}) {
+  MessagesListController({List<T>? items}) {
     if (items != null) addAll(items);
   }
 
@@ -62,8 +63,8 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
     }
   }
 
-  T getById(String id) {
-    return _items.firstWhere((element) => element.id == id, orElse: () => null);
+  T? getById(String id) {
+    return _items.firstWhereOrNull((element) => element.id == id);
   }
 
   void notifyChanges() => notifyListeners();
@@ -144,7 +145,7 @@ class MessagesListController<T extends MessageBase> extends ChangeNotifier {
 /// There is no selection management since usually tapping simply means navigating to the chat
 /// and longPressing will trigger single item actions;
 class ChatsListController<T extends ChatBase> extends ChangeNotifier {
-  ChatsListController({List<T> items}) {
+  ChatsListController({List<T>? items}) {
     if (items != null) addAll(items);
   }
 
@@ -192,8 +193,8 @@ class ChatsListController<T extends ChatBase> extends ChangeNotifier {
     }
   }
 
-  T getById(String id) {
-    return _items.firstWhere((element) => element.id == id, orElse: () => null);
+  T? getById(String id) {
+    return _items.firstWhereOrNull((element) => element.id == id);
   }
 
   void notifyChanges() => notifyListeners();

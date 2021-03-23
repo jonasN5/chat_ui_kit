@@ -17,7 +17,7 @@ abstract class MessageInputTypingHandler {
   Duration idleStopDelay = Duration(seconds: 5);
 
   /// Called when the user starts typing or stops typing
-  Function(TypingEvent event) get typingCallback;
+  Function(TypingEvent event)? get typingCallback;
 
   TextEditingController get textController;
 
@@ -25,7 +25,7 @@ abstract class MessageInputTypingHandler {
   bool _isTyping = false;
 
   /// The internal timer called after [idleStopDelay] to trigger [TypingEvent.stop]
-  Timer _timer;
+  Timer? _timer;
 
   /// Call this method in your [initState]
   void attachTypingListener() =>
@@ -36,27 +36,27 @@ abstract class MessageInputTypingHandler {
       if (!_isTyping) {
         //set status to typing and emit new status
         _isTyping = true;
-        if (typingCallback != null) typingCallback(TypingEvent.start);
+        if (typingCallback != null) typingCallback!(TypingEvent.start);
       }
       //start or reset the stop delay
       _timer?.cancel();
       _timer = Timer(idleStopDelay, () {
         _isTyping = false;
-        if (typingCallback != null) typingCallback(TypingEvent.stop);
+        if (typingCallback != null) typingCallback!(TypingEvent.stop);
       });
     } else {
       //text changed to nothing, emit stop event
       _isTyping = false;
-      if (typingCallback != null) typingCallback(TypingEvent.stop);
+      if (typingCallback != null) typingCallback!(TypingEvent.stop);
     }
   }
 }
 
 class MessageInput extends StatefulWidget {
   MessageInput(
-      {Key key,
-      @required this.textController,
-      @required this.sendCallback,
+      {Key? key,
+      required this.textController,
+      required this.sendCallback,
       this.typingCallback,
       this.focusNode})
       : super(key: key);
@@ -65,9 +65,9 @@ class MessageInput extends StatefulWidget {
   final Function(String text) sendCallback;
 
   /// Triggered by [MessageInputTypingHandler] on typing events
-  final Function(TypingEvent event) typingCallback;
+  final Function(TypingEvent event)? typingCallback;
   final TextEditingController textController;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
 
   @override
   _MessageInputState createState() => _MessageInputState();
@@ -76,10 +76,10 @@ class MessageInput extends StatefulWidget {
 /// Uses [MessageInputTypingHandler] as a mixin to handle typing events
 class _MessageInputState extends State<MessageInput>
     with TickerProviderStateMixin, MessageInputTypingHandler {
-  AnimationController _animationControllerCheckMark;
-  AnimationController _animationControllerSend;
-  Animation<double> _animationCheckmark;
-  Animation<double> _animationSend;
+  late AnimationController _animationControllerCheckMark;
+  late AnimationController _animationControllerSend;
+  late Animation<double> _animationCheckmark;
+  late Animation<double> _animationSend;
 
   bool isAnimating = false;
 
@@ -89,7 +89,7 @@ class _MessageInputState extends State<MessageInput>
 
   /// Supply the callback to [MessageInputTypingHandler]
   @override
-  Function(TypingEvent event) get typingCallback => widget.typingCallback;
+  Function(TypingEvent event)? get typingCallback => widget.typingCallback;
 
   @override
   void initState() {

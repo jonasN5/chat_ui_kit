@@ -19,3 +19,5 @@ export 'src/widgets/helpers/message_audio.dart';
 export 'src/widgets/helpers/message_video.dart';
 export 'src/utils/selection_event.dart';
 export 'src/utils/controllers.dart';
+export 'src/styling/chats_list_style.dart';
+export 'src/styling/message_style.dart';

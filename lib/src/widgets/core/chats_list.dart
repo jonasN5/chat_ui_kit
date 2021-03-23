@@ -1,3 +1,4 @@
+import 'package:chat_ui_kit/src/styling/chats_list_style.dart';
 import 'package:chat_ui_kit/src/utils/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,16 +9,16 @@ import 'package:chat_ui_kit/src/models/chat_base.dart';
 import 'package:chat_ui_kit/src/widgets/core/chats_list_tile.dart';
 import 'package:chat_ui_kit/src/widgets/helpers/group_avatar.dart';
 
-class ChatsList<T extends ChatBase> extends StatefulWidget {
+class ChatsList<T extends ChatBase?> extends StatefulWidget {
   ChatsList(
-      {Key key,
-      @required this.controller,
-      @required this.appUserId,
+      {Key? key,
+      required this.controller,
+      required this.appUserId,
       this.areItemsTheSame,
-      //this.chatsListStyle = const ChatsListStyle(),
+      this.chatsListStyle,
       this.groupAvatarStyle,
       this.unreadBubbleEnabled = true,
-      @required this.builders,
+      required this.builders,
       this.scrollHandler})
       : super(key: key);
 
@@ -30,13 +31,13 @@ class ChatsList<T extends ChatBase> extends StatefulWidget {
 
   /// Called by the DiffUtil to decide whether two object represent the same Item.
   /// By default, this will check whether oldItem.getId() == newItem.getId();
-  final bool Function(T oldItem, T newItem) areItemsTheSame;
+  final bool Function(T oldItem, T newItem)? areItemsTheSame;
 
-  /// Example styling configuration for the widget
-  //final ChatsListStyle chatsListStyle;
+  /// Styling and settings for [ChatsList].
+  final ChatsListStyle? chatsListStyle;
 
   /// Styling configuration for the default [GroupAvatar] used in [_buildLeading]
-  final GroupAvatarStyle groupAvatarStyle;
+  final GroupAvatarStyle? groupAvatarStyle;
 
   /// Set to true if you want to display a bubble above the group avatar
   /// which shows the number of unread messages
@@ -52,7 +53,7 @@ class ChatsList<T extends ChatBase> extends StatefulWidget {
   ///   if (scroll.metrics.pixels == scroll.metrics.maxScrollExtent)
   ///     _getMoreChats();
   /// }
-  final Function(ScrollNotification scroll) scrollHandler;
+  final Function(ScrollNotification scroll)? scrollHandler;
 
   @override
   _ChatsListState createState() => _ChatsListState();
@@ -92,16 +93,17 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
     // Specify the generic type of the data in the list.
     return NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scroll) {
-          if (widget.scrollHandler != null) widget.scrollHandler.call(scroll);
+          if (widget.scrollHandler != null) widget.scrollHandler!.call(scroll);
           return;
-        },
+        } as bool Function(ScrollNotification)?,
         child: ImplicitlyAnimatedList<T>(
+            physics: widget.chatsListStyle?.physics,
             // The current items in the list.
-            items: widget.controller.items,
-            areItemsTheSame: (T a, T b) {
+            items: widget.controller.items as List<T>,
+            areItemsTheSame: (T? a, T? b) {
               if (widget.areItemsTheSame != null)
-                return widget.areItemsTheSame(a, b);
-              return a.id == b.id;
+                return widget.areItemsTheSame!(a, b);
+              return a!.id == b!.id;
             },
             // Called, as needed, to build list item .
             // List items are only built when they're scrolled into view.

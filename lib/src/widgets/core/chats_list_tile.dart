@@ -1,13 +1,12 @@
 import 'package:chat_ui_kit/src/models/chat_base.dart';
 import 'package:chat_ui_kit/src/widgets/helpers/group_avatar.dart';
 import 'package:flutter/material.dart';
-
 import 'package:chat_ui_kit/src/utils/builders.dart';
 import 'package:chat_ui_kit/src/utils/date_formatter.dart';
 
 class ChatsListTileBuilders<T extends ChatBase> {
   /// Pass a custom leading Widget to replace the default in [ChatsListTile._buildLeading]
-  final ChatsWidgetBuilder leading;
+  final ChatsWidgetBuilder? leading;
 
   /// Builder used by [GroupAvatar] in [ChatsListTile._buildLeading] if [leading] is null.
   /// Must be provided if leading is null.
@@ -16,35 +15,35 @@ class ChatsListTileBuilders<T extends ChatBase> {
   /// [itemIndex] is the position of the item (tile) in the list.
   /// [imageIndex] is the avatar's position with the following map.
   final Widget Function(BuildContext context, int imageIndex, int itemIndex,
-      Size size, T item) groupAvatarBuilder;
+      Size size, T item)? groupAvatarBuilder;
 
   /// Builder used only if [midSection] is null
   /// Replaces the default unread bubble Widget
   /// The widget is a child of Stack, place above the group avatar
-  final ChatsWidgetBuilder unreadBubbleBuilder;
+  final ChatsWidgetBuilder? unreadBubbleBuilder;
 
   /// Pass a custom mid section Widget to replace the default [ChatsListTile._buildMidSection]
-  final ChatsWidgetBuilder midSection;
+  final ChatsWidgetBuilder? midSection;
 
   /// Builder used only if [midSection] is null
   /// Replaces the default title
-  final ChatsWidgetBuilder titleBuilder;
+  final ChatsWidgetBuilder? titleBuilder;
 
   /// Builder used only if [midSection] is null and [titleBuilder] is null
   /// Replaces the default date Widget
-  final DateBuilder dateBuilder;
+  final DateBuilder? dateBuilder;
 
   /// Builder used only if [midSection] is null
   /// Replaces the default last message Widget
-  final ChatsWidgetBuilder lastMessageBuilder;
+  final ChatsWidgetBuilder? lastMessageBuilder;
 
   /// Build a custom trailing Widget, otherwise empty
-  final ChatsWidgetBuilder trailing;
+  final ChatsWidgetBuilder? trailing;
 
   /// A top level wrapper for the whole tile, whose child should be [child]
   /// This is meant for you to be able to build your custom action manager, typically
   /// [InkWell] or [GestureDetector] and/or [Dismissible]
-  final Widget Function(BuildContext context, int index, T item, Widget child)
+  final Widget Function(BuildContext context, int index, T item, Widget child)?
       wrapper;
 
   const ChatsListTileBuilders(
@@ -81,13 +80,13 @@ Widget _defaultChatsListTileWrapper(
 
 class ChatsListTile<T extends ChatBase> extends StatelessWidget {
   ChatsListTile(
-      {Key key,
-      @required this.item,
-      @required this.index,
-      @required this.appUserId,
+      {Key? key,
+      required this.item,
+      required this.index,
+      required this.appUserId,
       this.groupAvatarStyle,
       this.unreadBubbleEnabled = true,
-      @required this.builders})
+      required this.builders})
       : super(key: key);
 
   /// The item containing the tile data
@@ -101,7 +100,7 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
   final String appUserId;
 
   /// Styling configuration for the default [GroupAvatar] used in [_buildLeading]
-  final GroupAvatarStyle groupAvatarStyle;
+  final GroupAvatarStyle? groupAvatarStyle;
 
   /// Set to true if you want to display a bubble above the group avatar
   /// which shows the number of unread messages
@@ -115,7 +114,7 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
   /// Build the group avatar with the optional unread bubble
   Widget _buildLeading(BuildContext context) {
     final child = builders.leading != null
-        ? builders.leading.call(context, index, item)
+        ? builders.leading!.call(context, index, item)
         : Padding(
             padding: EdgeInsets.all(16),
             child: GroupAvatar(
@@ -125,12 +124,12 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
                     .toList(),
                 style: groupAvatarStyle,
                 builder: (ctx, imageIndex, size, items) => builders
-                    .groupAvatarBuilder
+                    .groupAvatarBuilder!
                     .call(ctx, imageIndex, index, size, item)));
     if (!unreadBubbleEnabled || (item.unreadCount ?? 0) < 1) return child;
 
     final bubble = builders.unreadBubbleBuilder != null
-        ? builders.unreadBubbleBuilder.call(context, index, item)
+        ? builders.unreadBubbleBuilder!.call(context, index, item)
         : Positioned(
             right: builders.leading == null ? 12 : 0,
             top: builders.leading == null ? 12 : 0,
@@ -158,12 +157,12 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
 
   Widget _buildMidSection(BuildContext context) {
     if (builders.midSection != null)
-      return builders.midSection.call(context, index, item);
+      return builders.midSection!.call(context, index, item);
     final date = item.lastMessage?.createdAt;
 
     //build the title
     final Widget title = builders.titleBuilder != null
-        ? builders.titleBuilder.call(context, index, item)
+        ? builders.titleBuilder!.call(context, index, item)
         : Row(
             children: [
               Expanded(
@@ -176,20 +175,20 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
                           : TextStyle(fontWeight: FontWeight.bold))),
               if (date != null)
                 builders.dateBuilder != null
-                    ? builders.dateBuilder.call(context, date)
+                    ? builders.dateBuilder!.call(context, date)
                     : Text(DateFormatter.getVerboseDateTimeRepresentation(
                         context, date))
             ],
           );
 
-    Widget lastMessage;
+    Widget? lastMessage;
     if (item.lastMessage != null) {
       //build the last message
       lastMessage = builders.lastMessageBuilder != null
-          ? builders.lastMessageBuilder.call(context, index, item)
+          ? builders.lastMessageBuilder!.call(context, index, item)
           : Padding(
               padding: EdgeInsets.only(top: 8),
-              child: Text(item.lastMessage?.text,
+              child: Text(item.lastMessage?.text ?? "",
                   overflow: TextOverflow.ellipsis));
     }
 
@@ -197,7 +196,7 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [title, if (item.lastMessage != null) lastMessage],
+      children: [title, if (item.lastMessage != null) lastMessage!],
     );
   }
 
@@ -208,11 +207,11 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
         _buildLeading(context),
         Expanded(child: _buildMidSection(context)),
         if (builders.trailing != null)
-          builders.trailing.call(context, index, item)
+          builders.trailing!.call(context, index, item)
       ],
     );
     if (builders.wrapper != null)
-      return builders.wrapper.call(context, index, item, child);
+      return builders.wrapper!.call(context, index, item, child);
     return child;
   }
 }

@@ -20,13 +20,13 @@ class ChatMessageVideo extends StatefulWidget {
 
   final MessageBase message;
 
-  final MessagePosition messagePosition;
+  final MessagePosition? messagePosition;
 
   final MessageFlow messageFlow;
 
   const ChatMessageVideo(
       this.index, this.message, this.messagePosition, this.messageFlow,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -34,8 +34,8 @@ class ChatMessageVideo extends StatefulWidget {
 }
 
 class _ChatMessageVideoState extends State<ChatMessageVideo> {
-  Future<VideoData> _videoData;
-  Future<Uint8List> _videoThumbnail;
+  Future<VideoData?>? _videoData;
+  Future<Uint8List?>? _videoThumbnail;
 
   double get _maxSize => MediaQuery.of(context).size.width * 0.5;
 
@@ -53,7 +53,7 @@ class _ChatMessageVideoState extends State<ChatMessageVideo> {
   }
 
   /// Retrieve video metaData
-  Future<VideoData> getVideoInfo(File file) {
+  Future<VideoData?> getVideoInfo(File file) {
     final videoInfo = FlutterVideoInfo();
     return videoInfo.getVideoInfo(file.path);
   }
@@ -71,11 +71,11 @@ class _ChatMessageVideoState extends State<ChatMessageVideo> {
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done &&
                       snapshot.data != null) {
-                    final VideoData data = snapshot.data;
+                    final data = snapshot.data as VideoData;
                     return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                            Duration(milliseconds: data.duration.toInt())
+                            Duration(milliseconds: data.duration!.toInt())
                                 .verboseDuration));
                   }
                   return Container();
@@ -104,7 +104,7 @@ class _ChatMessageVideoState extends State<ChatMessageVideo> {
                     child: Stack(
                       alignment: AlignmentDirectional.bottomEnd,
                       children: [
-                        Image.memory(snapshot.data,
+                        Image.memory(snapshot.data as Uint8List,
                             fit: BoxFit.cover,
                             width: _maxSize,
                             height: _maxSize),

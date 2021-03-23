@@ -20,15 +20,15 @@ class MessageTileBuilders<T extends MessageBase> {
   /// event types messages (user joined chat, renaming chat etc.).
   /// This builder will be called instead of [MessagesList._buildItem].
   final Widget Function(BuildContext context, Animation<double> animation,
-      int index, T item, MessagePosition messagePosition) customTileBuilder;
+      int index, T item, MessagePosition messagePosition)? customTileBuilder;
 
   /// Call this builder to override the default [DateLabel] widget to build the date labels
-  final DateBuilder customDateBuilder;
+  final DateBuilder? customDateBuilder;
 
   /// Wraps the default [MessagesListTile] and overrides the default [InkWell]
   /// If you use this, you have to implement your own selection Widget
   final Widget Function(BuildContext context, int index, T item,
-      MessagePosition messagePosition, Widget child) wrapperBuilder;
+      MessagePosition? messagePosition, Widget child)? wrapperBuilder;
 
   final IncomingMessageTileBuilders incomingMessageBuilders;
 
@@ -45,15 +45,15 @@ class MessageTileBuilders<T extends MessageBase> {
 class IncomingMessageTileBuilders<T extends MessageBase> {
   /// Builder to display a widget in front of the body;
   /// Typically build the user's avatar here
-  final MessageWidgetBuilder avatarBuilder;
+  final MessageWidgetBuilder? avatarBuilder;
 
   /// Builder to display a widget on top of the first message from the same user.
   /// Typically build the user's username here.
   /// Pass null to disable the default builder [_defaultIncomingMessageTileTitleBuilder].
-  final MessageWidgetBuilder titleBuilder;
+  final MessageWidgetBuilder? titleBuilder;
 
   /// Override the default text widget and supply a complete widget (including container) using your own logic
-  final MessageWidgetBuilder bodyBuilder;
+  final MessageWidgetBuilder? bodyBuilder;
 
   const IncomingMessageTileBuilders(
       {this.avatarBuilder,
@@ -63,13 +63,13 @@ class IncomingMessageTileBuilders<T extends MessageBase> {
 
 class OutgoingMessageTileBuilders<T extends MessageBase> {
   /// Override the default text widget and supply a complete widget (including container) using your own logic
-  final MessageWidgetBuilder bodyBuilder;
+  final MessageWidgetBuilder? bodyBuilder;
 
   const OutgoingMessageTileBuilders({this.bodyBuilder});
 }
 
 Widget _defaultIncomingMessageTileTitleBuilder(BuildContext context, int index,
-    MessageBase item, MessagePosition messagePosition) {
+    MessageBase item, MessagePosition? messagePosition) {
   return Padding(
       padding: EdgeInsets.only(bottom: 4.0),
       child: Text(item.author?.name ?? "",
@@ -78,11 +78,11 @@ Widget _defaultIncomingMessageTileTitleBuilder(BuildContext context, int index,
 
 class MessagesListTile<T extends MessageBase> extends StatelessWidget {
   MessagesListTile(
-      {Key key,
-      @required this.item,
-      @required this.index,
-      @required this.controller,
-      @required this.appUserId,
+      {Key? key,
+      required this.item,
+      required this.index,
+      required this.controller,
+      required this.appUserId,
       this.style,
       this.builders,
       this.messagePosition})
@@ -101,11 +101,11 @@ class MessagesListTile<T extends MessageBase> extends StatelessWidget {
   /// Required to determine whether a message is owned
   final String appUserId;
 
-  final MessageStyle style;
+  final MessageStyle? style;
 
-  final MessageTileBuilders builders;
+  final MessageTileBuilders? builders;
 
-  final MessagePosition messagePosition;
+  final MessagePosition? messagePosition;
 
   MessageFlow get _messageFlow => item.isFromAppUser(appUserId)
       ? MessageFlow.outgoing
@@ -114,26 +114,26 @@ class MessagesListTile<T extends MessageBase> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget child = Padding(
-        padding: style.padding,
+        padding: style!.padding,
         child: _messageFlow == MessageFlow.outgoing
             ? OutgoingMessage(
                 item: item,
                 index: index,
                 messagePosition: messagePosition,
-                builders: builders.outgoingMessageBuilders)
+                builders: builders!.outgoingMessageBuilders)
             : IncomingMessage(
                 item: item,
                 index: index,
                 style: style,
                 messagePosition: messagePosition,
-                builders: builders.incomingMessageBuilders));
-    if (builders.wrapperBuilder != null)
-      return builders.wrapperBuilder
+                builders: builders!.incomingMessageBuilders));
+    if (builders!.wrapperBuilder != null)
+      return builders!.wrapperBuilder!
           .call(context, index, item, messagePosition, child);
     return Container(
         foregroundDecoration: BoxDecoration(
             color: controller.isItemSelected(item)
-                ? style.selectionColor ?? Colors.white.withAlpha(50)
+                ? style!.selectionColor ?? Colors.white.withAlpha(50)
                 : Colors.transparent),
         child: Material(
             clipBehavior: Clip.antiAlias,

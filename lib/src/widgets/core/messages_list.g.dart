@@ -7,7 +7,7 @@ part of 'messages_list.dart';
 // **************************************************************************
 
 class _BuildDate<T extends MessageBase> extends StatelessWidget {
-  const _BuildDate(this.item, this.builders, {Key key}) : super(key: key);
+  const _BuildDate(this.item, this.builders, {Key? key}) : super(key: key);
 
   final T item;
 

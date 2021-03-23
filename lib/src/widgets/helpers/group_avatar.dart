@@ -12,7 +12,7 @@ part 'group_avatar.g.dart';
 ///
 /// Use [size] to determine the size of the image you should load.
 typedef GroupAvatarWidgetBuilder<T> = Widget Function(
-    BuildContext context, int imageIndex, Size size, List<T> items);
+    BuildContext context, int imageIndex, Size size, List<T?> items);
 
 enum GroupAvatarShape { circle, rectangle }
 
@@ -39,7 +39,7 @@ class GroupAvatarStyle {
   /// Usually you will want to pass something like this:
   /// Border.all(color: Theme.of(context).backgroundColor, width: 2.0).
   /// Default is no border.
-  final Border stackedBorder;
+  final Border? stackedBorder;
 
   /// The shape of your GroupAvatar;
   /// When passing [GroupAvatarShape.rectangle], you can also specify [borderRadius]
@@ -53,7 +53,7 @@ class GroupAvatarStyle {
   final bool withSeparator;
 
   /// Ignored if [withSeparator] == false.
-  final Color separatorColor;
+  final Color? separatorColor;
 
   /// Ignored if [withSeparator] == false.
   final double separatorThickness;
@@ -78,10 +78,10 @@ class GroupAvatarStyle {
 /// A widget the display multiple avatars inside a single widget
 class GroupAvatar<T> extends StatelessWidget {
   GroupAvatar(
-      {Key key,
-      @required this.items,
-      @required this.builder,
-      GroupAvatarStyle style})
+      {Key? key,
+      required this.items,
+      required this.builder,
+      GroupAvatarStyle? style})
       : style = style ?? GroupAvatarStyle(),
         super(key: key);
 
@@ -184,7 +184,7 @@ Widget _buildStackedGroupAvatar<T>(BuildContext context, GroupAvatarStyle style,
 /// Helper
 @swidget
 Widget _buildStackedAvatar<T>(BuildContext context, List<T> items,
-    GroupAvatarWidgetBuilder builder, int index, double size, Border border) {
+    GroupAvatarWidgetBuilder builder, int index, double size, Border? border) {
   return Container(
       width: size,
       height: size,

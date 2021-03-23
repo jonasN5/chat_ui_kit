@@ -13,11 +13,11 @@ abstract class ChatBase {
   List<UserBase> get members;
 
   /// The chat's last message, used to display below the chat's title
-  MessageBase get lastMessage;
+  MessageBase? get lastMessage;
 
   /// The number of unread messages
   /// pass null or 0 if you don't plan on displaying it
-  int get unreadCount;
+  int? get unreadCount;
 
   /// Whether the status of this chat is "unread", e.g. the last message has not been read
   bool get isUnread => (unreadCount ?? 0) > 0;

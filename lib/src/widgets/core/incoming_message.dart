@@ -22,19 +22,19 @@ class IncomingMessage<T extends MessageBase> extends StatelessWidget {
   final int index;
 
   /// Custom styling you want to apply
-  final MessageStyle style;
+  final MessageStyle? style;
 
   /// The custom component builders
   final IncomingMessageTileBuilders builders;
 
   /// The message's position relative to other messages
-  final MessagePosition messagePosition;
+  final MessagePosition? messagePosition;
 
   IncomingMessage(
-      {Key key,
-      @required this.item,
-      @required this.index,
-      IncomingMessageTileBuilders builders,
+      {Key? key,
+      required this.item,
+      required this.index,
+      IncomingMessageTileBuilders? builders,
       this.messagePosition = MessagePosition.isolated,
       this.style = const MessageStyle()})
       : builders = builders ?? const IncomingMessageTileBuilders(),
@@ -44,9 +44,9 @@ class IncomingMessage<T extends MessageBase> extends StatelessWidget {
       builders.avatarBuilder != null &&
       (messagePosition == MessagePosition.isolated ||
           (messagePosition == MessagePosition.surroundedBot &&
-              style.avatarBehaviour == AvatarBehaviour.alwaysTop) ||
+              style!.avatarBehaviour == AvatarBehaviour.alwaysTop) ||
           (messagePosition == MessagePosition.surroundedTop &&
-              style.avatarBehaviour == AvatarBehaviour.alwaysBottom));
+              style!.avatarBehaviour == AvatarBehaviour.alwaysBottom));
 
   bool get _shouldBuildTitle =>
       builders.titleBuilder != null &&
@@ -58,7 +58,8 @@ class IncomingMessage<T extends MessageBase> extends StatelessWidget {
     Widget _child;
 
     if (builders.bodyBuilder != null) {
-      _child = builders.bodyBuilder.call(context, index, item, messagePosition);
+      _child =
+          builders.bodyBuilder!.call(context, index, item, messagePosition);
     } else {
       if (item.messageType == MessageBaseType.text) {
         _child =
@@ -78,14 +79,14 @@ class IncomingMessage<T extends MessageBase> extends StatelessWidget {
     }
 
     final _messageBody = Row(
-      crossAxisAlignment: style.avatarBehaviour == AvatarBehaviour.alwaysTop
+      crossAxisAlignment: style!.avatarBehaviour == AvatarBehaviour.alwaysTop
           ? CrossAxisAlignment.start
           : CrossAxisAlignment.end,
       children: [
         if (_shouldBuildAvatar)
-          builders.avatarBuilder.call(context, index, item, messagePosition),
+          builders.avatarBuilder!.call(context, index, item, messagePosition),
         if (!_shouldBuildAvatar && builders.avatarBuilder != null)
-          Container(width: style.avatarWidth),
+          Container(width: style!.avatarWidth),
         _child
       ],
     );
@@ -98,8 +99,10 @@ class IncomingMessage<T extends MessageBase> extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(width: style.avatarWidth),
-            builders.titleBuilder.call(context, index, item, messagePosition)
+            Container(width: style!.avatarWidth),
+            if (builders.titleBuilder != null)
+              builders.titleBuilder!
+                  .call(context, index, item, messagePosition)
           ],
         ),
         _messageBody
