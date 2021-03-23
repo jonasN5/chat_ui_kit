@@ -1,4 +1,4 @@
-## [1.2.0] - 23/03/2020
+## [1.2.0-nullsafety.0] - 23/03/2020
 
 * Migrated to null safety
 * Exposed ScrollPhysics parameter for ChatsList and MessagesList
