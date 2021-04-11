@@ -97,6 +97,7 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
           return;
         } as bool Function(ScrollNotification)?,
         child: ImplicitlyAnimatedList<T>(
+            padding: widget.chatsListStyle?.padding,
             physics: widget.chatsListStyle?.physics,
             // The current items in the list.
             items: widget.controller.items as List<T>,

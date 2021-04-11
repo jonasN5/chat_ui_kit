@@ -297,7 +297,7 @@ packages:
       name: just_audio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.1"
+    version: "0.7.3"
   just_audio_platform_interface:
     dependency: transitive
     description:
@@ -311,7 +311,7 @@ packages:
       name: just_audio_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   logging:
     dependency: transitive
     description:
@@ -554,7 +554,7 @@ packages:
       name: video_thumbnail
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1"
+    version: "0.3.3"
   watcher:
     dependency: transitive
     description:
