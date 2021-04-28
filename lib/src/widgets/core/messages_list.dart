@@ -26,7 +26,7 @@ class MessagesList<T extends MessageBase?> extends StatefulWidget {
       this.messagePosition,
       this.shouldBuildDate,
       this.builders = const MessageTileBuilders()})
-      : assert(useCustomTile != null && builders.customTileBuilder != null,
+      : assert(useCustomTile != null && builders.customTileBuilder == null,
             "You have to provide a customTileBuilder if you set useCustomTile"),
         super(key: key);
 
