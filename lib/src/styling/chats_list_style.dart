@@ -7,5 +7,8 @@ class ChatsListStyle {
   /// Defaults to platform default.
   final ScrollPhysics? physics;
 
-  const ChatsListStyle({this.physics});
+  /// [EdgeInsetsGeometry] parameter for the list of chats.
+  final EdgeInsetsGeometry? padding;
+
+  const ChatsListStyle({this.physics, this.padding});
 }

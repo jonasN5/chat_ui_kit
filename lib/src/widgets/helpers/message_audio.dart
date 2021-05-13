@@ -131,8 +131,7 @@ class _ChatMessageAudioState extends State<ChatMessageAudio> {
                               padding: EdgeInsets.only(left: 8),
                               child: Slider.adaptive(
                                   value:
-                                      _position?.inMilliseconds.toDouble() ??
-                                          0,
+                                      _position?.inMilliseconds.toDouble() ?? 0,
                                   max: _dur?.inMilliseconds.toDouble() ?? 0,
                                   onChanged: onSliderValueChanged))),
                       Align(alignment: Alignment.bottomCenter, child: _footer)

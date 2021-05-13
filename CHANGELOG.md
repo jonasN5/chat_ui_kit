@@ -1,31 +1,37 @@
-## [1.2.0-nullsafety.0] - 23/03/2020
+## [1.2.0] - 13/05/2021
+
+* Fixed changelog wrong years (thnx to https://github.com/jangruenwaldt)
+* Updated dependencies
+* Bumped null safety to stable version
+
+## [1.2.0-nullsafety.0] - 23/03/2021
 
 * Migrated to null safety
 * Exposed ScrollPhysics parameter for ChatsList and MessagesList
 
-## [1.1.7] - 17/03/2020
+## [1.1.7] - 17/03/2021
 
 * Added the possibility to display the GroupAvatar images in stacked circles, for a more modern UI. Check out GroupAvatarMode.stackedCircles.
 
-## [1.1.6] - 01/03/2020
+## [1.1.6] - 01/03/2021
 
 * Move chat padding from top level to message level to make item selection cover the whole screen width
 * Updated documentation to reflect the change
 
-## [1.1.5] - 24/02/2020
+## [1.1.5] - 24/02/2021
 
 * Increased the default unread messages bubble padding to make it more readable
 
-## [1.1.4] - 20/02/2020
+## [1.1.4] - 20/02/2021
 
 * Fixed a bug where ChatsListController.updateById would not update the item
 * Style is now correctly passed from MessagesListTile to IncomingMessage
 
-## [1.1.3] - 22/01/2020
+## [1.1.3] - 22/01/2021
 
 * LastMessage can now be null
 
-## [1.1.2] - 07/01/2020
+## [1.1.2] - 07/01/2021
 
 * Fixed a bug where the typing event would not be emitted after deleting a message
 * Added a convenience method to get an item by id

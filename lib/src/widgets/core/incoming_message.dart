@@ -101,8 +101,7 @@ class IncomingMessage<T extends MessageBase> extends StatelessWidget {
           children: [
             Container(width: style!.avatarWidth),
             if (builders.titleBuilder != null)
-              builders.titleBuilder!
-                  .call(context, index, item, messagePosition)
+              builders.titleBuilder!.call(context, index, item, messagePosition)
           ],
         ),
         _messageBody
