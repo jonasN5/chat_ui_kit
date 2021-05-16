@@ -1,3 +1,7 @@
+## [1.2.1] - 16/05/2021
+
+* Fixed assertion error in MessagesList (thnx to https://github.com/knaeckeKami)
+
 ## [1.2.0] - 13/05/2021
 
 * Fixed changelog wrong years (thnx to https://github.com/jangruenwaldt)
