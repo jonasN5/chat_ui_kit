@@ -32,7 +32,7 @@ abstract class MessageInputTypingHandler {
       textController.addListener(_onTextChangedTypingListener);
 
   void _onTextChangedTypingListener() {
-    if (textController.text != null && textController.text.isNotEmpty) {
+    if (textController.text.isNotEmpty) {
       if (!_isTyping) {
         //set status to typing and emit new status
         _isTyping = true;
@@ -48,6 +48,8 @@ abstract class MessageInputTypingHandler {
       //text changed to nothing, emit stop event
       _isTyping = false;
       if (typingCallback != null) typingCallback!(TypingEvent.stop);
+      //cancel timer since stop event has already been emitted
+      _timer?.cancel();
     }
   }
 }
@@ -109,9 +111,7 @@ class _MessageInputState extends State<MessageInput>
   }
 
   void sendMessage() {
-    if (textController.text != null &&
-        textController.text.isNotEmpty &&
-        !isAnimating) {
+    if (textController.text.isNotEmpty && !isAnimating) {
       widget.sendCallback(textController.text);
       textController.clear();
 

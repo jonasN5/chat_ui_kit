@@ -1,6 +1,6 @@
 name: chat_ui_kit
 description: A complete Flutter chat UI kit which provides you with a base structure as well as a set of tools that allow you to quickly build up a modern chat UI.
-version: 1.2.1
+version: 1.2.2
 homepage: https://github.com/themadmrj/chat_ui_kit
 
 environment:

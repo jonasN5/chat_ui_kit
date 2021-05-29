@@ -205,8 +205,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     return NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scroll) {
           if (widget.scrollHandler != null) widget.scrollHandler!.call(scroll);
-          return;
-        } as bool Function(ScrollNotification)?,
+          return false;
+        },
         child: ImplicitlyAnimatedList<T>(
             physics: widget.style?.physics,
             // The current _items in the list.
