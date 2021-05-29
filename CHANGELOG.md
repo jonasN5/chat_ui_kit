@@ -1,3 +1,8 @@
+## [1.2.2] - 29/05/2021
+
+* Fixed a bug where a TypingEvent.stop would be emitted twice if the user deleted the input
+* Fixed NotificationListener null safety issue in some cases
+
 ## [1.2.1] - 16/05/2021
 
 * Fixed assertion error in MessagesList (thnx to https://github.com/knaeckeKami)

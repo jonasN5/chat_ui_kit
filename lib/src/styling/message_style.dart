@@ -10,7 +10,7 @@ class MessageStyle {
 
   /// Constrained width for the avatar, when displayed
   /// if an avatarBuilder is supplied but no avatar is built due to positioning,
-  /// [avatarWidth] is also used to build an empty container to align all messages
+  /// [avatarWidth] is also used to build an empty container to align all messages.
   final double avatarWidth;
 
   /// The outer padding of each tile

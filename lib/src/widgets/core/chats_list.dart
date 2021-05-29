@@ -94,8 +94,8 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
     return NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scroll) {
           if (widget.scrollHandler != null) widget.scrollHandler!.call(scroll);
-          return;
-        } as bool Function(ScrollNotification)?,
+          return false;
+        },
         child: ImplicitlyAnimatedList<T>(
             padding: widget.chatsListStyle?.padding,
             physics: widget.chatsListStyle?.physics,
