@@ -14,7 +14,7 @@ import 'package:chat_ui_kit/src/models/message_base.dart';
 
 part 'messages_list.g.dart';
 
-class MessagesList<T extends MessageBase?> extends StatefulWidget {
+class MessagesList<T extends MessageBase> extends StatefulWidget {
   MessagesList(
       {Key? key,
       required this.controller,
@@ -62,7 +62,7 @@ class MessagesList<T extends MessageBase?> extends StatefulWidget {
       useCustomTile;
 
   /// Pass a function to override the default [_messagePosition]
-  final MessagePosition Function(T previousItem, T currentItem, T nextItem,
+  final MessagePosition Function(T? previousItem, T currentItem, T? nextItem,
       bool Function(T currentItem) shouldBuildDate)? messagePosition;
 
   /// Pass a function to override the default [_shouldBuildDate]
@@ -72,7 +72,7 @@ class MessagesList<T extends MessageBase?> extends StatefulWidget {
   _MessagesListState createState() => _MessagesListState();
 }
 
-class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
+class _MessagesListState<T extends MessageBase> extends State<MessagesList<T>> {
   @override
   void initState() {
     widget.controller.addListener(_controllerListener);
@@ -136,8 +136,8 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
     T? previousItem = index + 1 < _items.length ? _items[index + 1] : null;
 
     if (widget.messagePosition != null)
-      return widget.messagePosition!.call(previousItem, currentItem, nextItem,
-          _shouldBuildDate as bool Function(MessageBase?));
+      return widget.messagePosition!
+          .call(previousItem, currentItem, nextItem, _shouldBuildDate);
 
     if (_shouldBuildDate(currentItem)) {
       previousItem = null;
@@ -216,10 +216,10 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList> {
                 //pass -1 as an index to differentiate with normal buildItem
                 (BuildContext context, Animation<double> animation, T item) =>
                     _buildItem(context, animation, item, -1),
-            areItemsTheSame: (T? a, T? b) {
+            areItemsTheSame: (T a, T b) {
               if (widget.areItemsTheSame != null)
                 return widget.areItemsTheSame!(a, b);
-              return a!.id == b!.id;
+              return a.id == b.id;
             },
             // Called, as needed, to build list item .
             // List _items are only built when they're scrolled into view.

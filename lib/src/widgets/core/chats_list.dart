@@ -9,7 +9,7 @@ import 'package:chat_ui_kit/src/models/chat_base.dart';
 import 'package:chat_ui_kit/src/widgets/core/chats_list_tile.dart';
 import 'package:chat_ui_kit/src/widgets/helpers/group_avatar.dart';
 
-class ChatsList<T extends ChatBase?> extends StatefulWidget {
+class ChatsList<T extends ChatBase> extends StatefulWidget {
   ChatsList(
       {Key? key,
       required this.controller,
@@ -59,7 +59,7 @@ class ChatsList<T extends ChatBase?> extends StatefulWidget {
   _ChatsListState createState() => _ChatsListState();
 }
 
-class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
+class _ChatsListState<T extends ChatBase> extends State<ChatsList<T>> {
   @override
   void initState() {
     widget.controller.addListener(_controllerListener);
@@ -101,10 +101,10 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList> {
             physics: widget.chatsListStyle?.physics,
             // The current items in the list.
             items: widget.controller.items as List<T>,
-            areItemsTheSame: (T? a, T? b) {
+            areItemsTheSame: (T a, T b) {
               if (widget.areItemsTheSame != null)
                 return widget.areItemsTheSame!(a, b);
-              return a!.id == b!.id;
+              return a.id == b.id;
             },
             // Called, as needed, to build list item .
             // List items are only built when they're scrolled into view.
