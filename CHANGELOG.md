@@ -1,3 +1,7 @@
+## [1.2.3] - 04/06/2021
+
+* Fixed a null safety TypeError
+
 ## [1.2.2] - 29/05/2021
 
 * Fixed a bug where a TypingEvent.stop would be emitted twice if the user deleted the input
