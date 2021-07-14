@@ -11,7 +11,7 @@ class _BuildDate<T extends MessageBase> extends StatelessWidget {
 
   final T item;
 
-  final MessageTileBuilders<MessageBase> builders;
+  final MessageTileBuilders<MessageBase>? builders;
 
   @override
   Widget build(BuildContext _context) =>

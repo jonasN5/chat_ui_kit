@@ -37,12 +37,12 @@ class _ChatsScreenSate extends State<ChatsScreen> {
         builder: (context) => ChatScreen(ChatScreenArgs(chat: chat))));
     //reset unread count
     if (chat.isUnread) {
-      chat.chat.unreadCount = 0;
+      chat.chat!.unreadCount = 0;
     }
   }
 
   /// Called when the user long pressed an item (a chat)
-  void onItemLongPressed(ChatWithMembers chat) {
+  void onItemLongPressed(ChatBase chat) {
     showDialog(
         context: context,
         builder: (_) {
@@ -76,9 +76,9 @@ class _ChatsScreenSate extends State<ChatsScreen> {
     //display avatar only if not a 1 to 1 conversation
     final bool displayAvatar = item.members.length > 2;
     //display an icon if there's an attachment
-    Widget attachmentIcon;
-    if (_chat.lastMessage.hasAttachment) {
-      final _type = _chat.lastMessage.type;
+    Widget? attachmentIcon;
+    if (_chat.lastMessage!.hasAttachment) {
+      final _type = _chat.lastMessage!.type;
       final iconColor = AppColors.chatsAttachmentIconColor(context);
       if (_type == ChatMessageType.audio) {
         attachmentIcon = Icon(Icons.keyboard_voice, color: iconColor);
@@ -90,7 +90,7 @@ class _ChatsScreenSate extends State<ChatsScreen> {
     }
 
     //get the message label
-    String messageText = _chat.lastMessage.messageText(_model.localUser.id);
+    String messageText = _chat.lastMessage!.messageText(_model.localUser.id);
 
     return Padding(
         padding: EdgeInsets.only(top: 8),
@@ -99,7 +99,7 @@ class _ChatsScreenSate extends State<ChatsScreen> {
             Padding(
                 padding: EdgeInsets.only(right: 8),
                 child: ClipOval(
-                    child: Image.asset(item.lastMessage.author.avatar,
+                    child: Image.asset(item.lastMessage!.author!.avatar,
                         width: 24, height: 24, fit: BoxFit.cover))),
           if (attachmentIcon != null)
             Padding(padding: EdgeInsets.only(right: 8), child: attachmentIcon),
@@ -114,7 +114,7 @@ class _ChatsScreenSate extends State<ChatsScreen> {
   Widget _buildTileWrapper(
       BuildContext context, int index, ChatBase item, Widget child) {
     return InkWell(
-        onTap: () => onItemPressed(item),
+        onTap: () => onItemPressed(item as ChatWithMembers),
         onLongPress: () => onItemLongPressed(item),
         child: Column(children: [
           Padding(padding: EdgeInsets.only(right: 16), child: child),

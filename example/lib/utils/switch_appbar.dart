@@ -11,20 +11,20 @@ class SwitchAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.switchActions})
       : preferredSize = Size.fromHeight(showSwitch
             ? kToolbarHeight
-            : primaryAppBar?.preferredSize?.height ?? kToolbarHeight);
+            : primaryAppBar?.preferredSize.height ?? kToolbarHeight);
 
   final bool showSwitch;
-  final PreferredSizeWidget primaryAppBar;
-  final PreferredSizeWidget switchAppBar;
-  final VoidCallback switchLeadingCallback;
-  final Widget switchTitle;
-  final List<Widget> switchActions;
+  final PreferredSizeWidget? primaryAppBar;
+  final PreferredSizeWidget? switchAppBar;
+  final VoidCallback? switchLeadingCallback;
+  final Widget? switchTitle;
+  final List<Widget>? switchActions;
 
   @override
   Widget build(BuildContext context) {
     return showSwitch
         ? switchAppBar != null
-            ? switchAppBar
+            ? switchAppBar!
             : AppBar(
                 backgroundColor: Theme.of(context).primaryColor,
                 leading: IconButton(

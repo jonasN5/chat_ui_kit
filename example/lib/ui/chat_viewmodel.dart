@@ -127,35 +127,35 @@ class ChatViewModel {
 
   ChatUser get localUser => chatUsers[0];
 
-  Map<String, List<ChatMessage>> chatMessages;
+  Map<String, List<ChatMessage>> chatMessages = {};
 
-  ChatsListController controller;
+  late ChatsListController controller;
 
   List<ChatWithMembers> generateExampleChats() {
     final List<ChatWithMembers> _chats = [];
     _chats.add(ChatWithMembers(
-        lastMessage: chatMessages["test_chat_id_0"].first,
+        lastMessage: chatMessages["test_chat_id_0"]!.first,
         chat: Chat(id: "test_chat_id_0", ownerId: localUser.id, unreadCount: 2),
         members: [chatUsers[0], chatUsers[1]]));
     _chats.add(ChatWithMembers(
-        lastMessage: chatMessages["test_chat_id_1"].first,
+        lastMessage: chatMessages["test_chat_id_1"]!.first,
         chat: Chat(id: "test_chat_id_1", ownerId: localUser.id),
         members: [chatUsers[0], chatUsers[4]]));
     _chats.add(ChatWithMembers(
-        lastMessage: chatMessages["test_chat_id_2"].first,
+        lastMessage: chatMessages["test_chat_id_2"]!.first,
         chat: Chat(id: "test_chat_id_2", ownerId: localUser.id),
         members: [chatUsers[0], chatUsers[5]]));
     _chats.add(ChatWithMembers(
-        lastMessage: chatMessages["test_chat_id_3"].first,
+        lastMessage: chatMessages["test_chat_id_3"]!.first,
         chat: Chat(id: "test_chat_id_3", ownerId: localUser.id),
         members: [chatUsers[0], chatUsers[1], chatUsers[3]]));
     _chats.add(ChatWithMembers(
-        lastMessage: chatMessages["test_chat_id_4"].first,
+        lastMessage: chatMessages["test_chat_id_4"]!.first,
         chat: Chat(
             id: "test_chat_id_4", ownerId: chatUsers[3].id, name: "Paradise"),
         members: [chatUsers[0], chatUsers[1], chatUsers[3], chatUsers[5]]));
     _chats.add(ChatWithMembers(
-        lastMessage: chatMessages["test_chat_id_5"].first,
+        lastMessage: chatMessages["test_chat_id_5"]!.first,
         chat: Chat(id: "test_chat_id_5", ownerId: chatUsers[2].id),
         members: [chatUsers[0], chatUsers[2]]));
     return _chats;
