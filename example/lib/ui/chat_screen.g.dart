@@ -11,7 +11,7 @@ class _ChatMessageText extends StatelessWidget {
   ///************************************************ Functional widgets used in the screen ***************************************
   const _ChatMessageText(
       this.index, this.message, this.messagePosition, this.messageFlow,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   ///************************************************ Functional widgets used in the screen ***************************************
@@ -34,7 +34,7 @@ class _ChatMessageText extends StatelessWidget {
 class ChatMessageFooter extends StatelessWidget {
   const ChatMessageFooter(
       this.index, this.message, this.messagePosition, this.messageFlow,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   final int index;
@@ -52,7 +52,7 @@ class ChatMessageFooter extends StatelessWidget {
 
 class _ChatMessageDate extends StatelessWidget {
   const _ChatMessageDate(this.index, this.message, this.messagePosition,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   final int index;

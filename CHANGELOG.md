@@ -1,3 +1,7 @@
+## [1.2.4] - 14/07/2021
+
+* Migrated example app to null safety
+
 ## [1.2.3] - 04/06/2021
 
 * Fixed a null safety TypeError

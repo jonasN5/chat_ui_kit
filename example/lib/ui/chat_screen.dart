@@ -18,7 +18,7 @@ class ChatScreenArgs {
   /// Pass the chat for an already existing chat
   final ChatWithMembers chat;
 
-  ChatScreenArgs({this.chat}) : assert(chat != null);
+  ChatScreenArgs({required this.chat});
 }
 
 class ChatScreen extends StatefulWidget {
@@ -42,7 +42,7 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
   int _selectedItemsCount = 0;
 
   /// Whether it's a group chat (more than 2 users)
-  bool get _isGroupChat => (widget.args.chat?.members?.length ?? 0) > 2;
+  bool get _isGroupChat => widget.args.chat.members.length > 2;
 
   ChatWithMembers get _chat => widget.args.chat;
 
@@ -50,7 +50,7 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller.addAll(_model.chatMessages[_chat.id]);
+    _controller.addAll(_model.chatMessages[_chat.id] ?? []);
 
     _controller.selectionEventStream.listen((event) {
       setState(() {
@@ -90,7 +90,7 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
   void copyContent() {
     String text = "";
     _controller.selectedItems.forEach((element) {
-      text += element.text;
+      text += element.text ?? "";
       text += '\n';
     });
     Clipboard.setData(ClipboardData(text: text)).then((value) {
@@ -117,7 +117,8 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
         Expanded(
             child: Padding(
                 padding: EdgeInsets.only(left: 8),
-                child: Text(_user.username, overflow: TextOverflow.ellipsis)))
+                child: Text(_user.username ?? "",
+                    overflow: TextOverflow.ellipsis)))
       ]);
     }
   }
@@ -185,7 +186,7 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
               return Padding(
                   padding: EdgeInsets.only(right: 16),
                   child: ClipOval(
-                      child: Image.asset(_chatMessage.author.avatar,
+                      child: Image.asset(_chatMessage.author!.avatar,
                           width: 32, height: 32, fit: BoxFit.cover)));
             })
         : IncomingMessageTileBuilders(
@@ -216,13 +217,13 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
   /// Override [MessagePosition] to return [MessagePosition.isolated] when
   /// our [ChatMessage] is an event
   MessagePosition _messagePosition(
-      MessageBase previousItem,
+      MessageBase? previousItem,
       MessageBase currentItem,
-      MessageBase nextItem,
+      MessageBase? nextItem,
       bool Function(MessageBase currentItem) shouldBuildDate) {
-    ChatMessage _previousItem = previousItem;
-    final ChatMessage _currentItem = currentItem;
-    ChatMessage _nextItem = nextItem;
+    ChatMessage? _previousItem = previousItem as ChatMessage?;
+    final ChatMessage _currentItem = currentItem as ChatMessage;
+    ChatMessage? _nextItem = nextItem as ChatMessage?;
 
     if (shouldBuildDate(_currentItem)) {
       _previousItem = null;
@@ -231,14 +232,14 @@ class _ChatScreenSate extends State<ChatScreen> with TickerProviderStateMixin {
     if (_nextItem?.isTypeEvent == true) _nextItem = null;
     if (_previousItem?.isTypeEvent == true) _previousItem = null;
 
-    if (_previousItem?.author?.id == _currentItem?.author?.id &&
-        _nextItem?.author?.id == _currentItem?.author?.id) {
+    if (_previousItem?.author?.id == _currentItem.author?.id &&
+        _nextItem?.author?.id == _currentItem.author?.id) {
       return MessagePosition.surrounded;
-    } else if (_previousItem?.author?.id == _currentItem?.author?.id &&
-        _nextItem?.author?.id != _currentItem?.author?.id) {
+    } else if (_previousItem?.author?.id == _currentItem.author?.id &&
+        _nextItem?.author?.id != _currentItem.author?.id) {
       return MessagePosition.surroundedTop;
-    } else if (_previousItem?.author?.id != _currentItem?.author?.id &&
-        _nextItem?.author?.id == _currentItem?.author?.id) {
+    } else if (_previousItem?.author?.id != _currentItem.author?.id &&
+        _nextItem?.author?.id == _currentItem.author?.id) {
       return MessagePosition.surroundedBot;
     } else {
       return MessagePosition.isolated;
@@ -300,7 +301,7 @@ Widget _chatMessageText(BuildContext context, int index, ChatMessage message,
       decoration: messageDecoration(context,
           messagePosition: messagePosition, messageFlow: messageFlow),
       child: Wrap(runSpacing: 4.0, alignment: WrapAlignment.end, children: [
-        Text(message.text),
+        Text(message.text ?? ""),
         ChatMessageFooter(index, message, messagePosition, messageFlow)
       ]));
 }

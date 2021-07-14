@@ -5,33 +5,33 @@ import 'chat_user.dart';
 import 'package:example/utils/app_const.dart';
 
 class Chat {
-  String id; //usually a UUID
-  String name;
-  String ownerId;
+  String? id; //usually a UUID
+  String? name;
+  String? ownerId;
   int unreadCount;
 
-  Chat({this.id, this.name, this.ownerId, this.unreadCount});
+  Chat({this.id, this.name, this.ownerId, this.unreadCount = 0});
 }
 
 class ChatWithMembers extends ChatBase {
-  Chat chat;
+  Chat? chat;
   List<ChatUser> members;
-  ChatMessage lastMessage;
+  ChatMessage? lastMessage;
 
-  ChatWithMembers({this.chat, this.members, this.lastMessage});
+  ChatWithMembers({this.chat, required this.members, this.lastMessage});
 
   @override
-  int get unreadCount => chat.unreadCount;
+  int get unreadCount => chat?.unreadCount ?? 0;
 
   @override
   String get name {
     final _name = (chat?.name ?? null);
-    if (_name != null && _name.isNotEmpty) return chat.name;
+    if (_name != null && _name.isNotEmpty) return chat!.name!;
     return membersWithoutSelf.map((e) => e.username).toList().join(", ");
   }
 
   @override
-  String get id => chat?.id;
+  String get id => chat?.id ?? "";
 
   List<ChatUser> get membersWithoutSelf {
     List<ChatUser> membersWithoutSelf = [];
@@ -42,5 +42,5 @@ class ChatWithMembers extends ChatBase {
     return membersWithoutSelf;
   }
 
-  bool get isGroupChat => (members?.length ?? 0) > 2;
+  bool get isGroupChat => members.length > 2;
 }

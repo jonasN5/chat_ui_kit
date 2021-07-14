@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ChatMessageImage extends StatelessWidget {
   const ChatMessageImage(
       this.index, this.message, this.messagePosition, this.messageFlow,
-      {Key key, this.callback})
+      {Key? key, this.callback})
       : super(key: key);
 
   final int index;
@@ -16,11 +16,11 @@ class ChatMessageImage extends StatelessWidget {
 
   final MessageFlow messageFlow;
 
-  final void Function() callback;
+  final void Function()? callback;
 
   @override
   Widget build(BuildContext context) {
-    final Widget _image = message.url == null
+    final Widget _image = message.url.isEmpty
         ? Container()
         : Image.asset(message.url,
             errorBuilder: (_, e, s) => Icon(Icons.broken_image));

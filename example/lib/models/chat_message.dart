@@ -18,32 +18,38 @@ enum ChatMessageType {
 }
 
 class ChatMessage extends MessageBase {
-  String id; //usually a UUID
-  String chatId;
-  ChatMessageType type;
-  ChatUser author;
-  String text;
-  String
+  String? messageid; //usually a UUID
+  String? chatId;
+  ChatMessageType? type;
+  ChatUser? author;
+  String? text;
+  String?
       attachment; //URL for the incoming attachment once downloaded and stored locally
-  int creationTimestamp; //server creation timestamp
+  int? creationTimestamp; //server creation timestamp
 
   ChatMessage(
-      {this.id,
+      {id,
       this.chatId,
       this.type = ChatMessageType.text,
       this.author,
       this.text,
       this.attachment,
       this.creationTimestamp = 0}) {
-    if (id == null || id.isEmpty) id = _generateRandomString(10);
+    this.messageid = id;
+    if (this.messageid == null || this.messageid?.isEmpty == true)
+      this.messageid = _generateRandomString(10);
+    if (creationTimestamp == null) creationTimestamp = 0;
   }
 
   @override
-  DateTime get createdAt =>
-      DateTime.fromMillisecondsSinceEpoch(creationTimestamp);
+  String get id => messageid != null ? messageid! : "";
 
   @override
-  String get url => attachment;
+  DateTime get createdAt =>
+      DateTime.fromMillisecondsSinceEpoch(creationTimestamp!);
+
+  @override
+  String get url => attachment ?? "";
 
   @override
   MessageBaseType get messageType {
@@ -74,20 +80,20 @@ class ChatMessage extends MessageBase {
     return userTypes.contains(type);
   }
 
-  bool get hasAttachment => attachment != null && attachment.isNotEmpty;
+  bool get hasAttachment => attachment != null && attachment!.isNotEmpty;
 
   String messageText(String localUserId) {
     if (type == ChatMessageType.renameChat) {
-      if (author.id == localUserId) {
+      if (author?.id == localUserId) {
         //current user renamed the chat
         return "You renamed the chat";
       } else {
         //another user renamed the chat
-        return "${author.username} renamed the chat to '$text'";
+        return "${author?.username} renamed the chat to '$text'";
       }
     } else {
       //type message, check if it's a file attachment
-      if (!hasAttachment) return text;
+      if (!hasAttachment) return text ?? "";
       if (type == ChatMessageType.audio) {
         return "Voice";
       } else if (type == ChatMessageType.video) {
@@ -95,7 +101,7 @@ class ChatMessage extends MessageBase {
       } else if (type == ChatMessageType.image) {
         return "Image";
       } else {
-        return text;
+        return text ?? "";
       }
     }
   }
