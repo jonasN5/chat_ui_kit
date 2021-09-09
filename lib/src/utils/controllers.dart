@@ -177,6 +177,9 @@ class ChatsListController<T extends ChatBase> extends ChangeNotifier {
   /// If [pushToStart] is true, the item will be repositioned to index 0;
   /// If [pushToEnd] is true, the item will be repositioned to the end of the list;
   void updateById(T item, {bool pushToStart = true, bool pushToEnd = false}) {
+    // Since pushToStart is the default, we swap if pushToEnd is true in case
+    // pushToStart is still true, which should not be the case.
+    if (pushToEnd) pushToStart = false;
     final index = _items.indexWhere((element) => element.id == item.id);
     if (index > -1) {
       if (pushToStart || pushToEnd) {

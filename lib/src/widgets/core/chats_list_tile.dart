@@ -22,7 +22,8 @@ class ChatsListTileBuilders<T extends ChatBase> {
   /// The widget is a child of Stack, place above the group avatar
   final ChatsWidgetBuilder? unreadBubbleBuilder;
 
-  /// Pass a custom mid section Widget to replace the default [ChatsListTile._buildMidSection]
+  /// Pass a custom mid section Widget to replace the default
+  /// [ChatsListTile._buildMidSection]
   final ChatsWidgetBuilder? midSection;
 
   /// Builder used only if [midSection] is null
@@ -33,16 +34,16 @@ class ChatsListTileBuilders<T extends ChatBase> {
   /// Replaces the default date Widget
   final DateBuilder? dateBuilder;
 
-  /// Builder used only if [midSection] is null
-  /// Replaces the default last message Widget
+  /// Builder used only if [midSection] is null.
+  /// Replaces the default last message Widget.
   final ChatsWidgetBuilder? lastMessageBuilder;
 
-  /// Build a custom trailing Widget, otherwise empty
+  /// Build a custom trailing Widget, otherwise empty.
   final ChatsWidgetBuilder? trailing;
 
-  /// A top level wrapper for the whole tile, whose child should be [child]
+  /// A top level wrapper for the whole tile, whose child should be [child].
   /// This is meant for you to be able to build your custom action manager, typically
-  /// [InkWell] or [GestureDetector] and/or [Dismissible]
+  /// [InkWell] or [GestureDetector] and/or [Dismissible].
   final Widget Function(BuildContext context, int index, T item, Widget child)?
       wrapper;
 
@@ -102,11 +103,11 @@ class ChatsListTile<T extends ChatBase> extends StatelessWidget {
   /// Styling configuration for the default [GroupAvatar] used in [_buildLeading]
   final GroupAvatarStyle? groupAvatarStyle;
 
-  /// Set to true if you want to display a bubble above the group avatar
-  /// which shows the number of unread messages
+  /// Default is true; set to false if you want to disable displaying a bubble
+  /// above the group avatar which shows the number of unread messages.
   final bool unreadBubbleEnabled;
 
-  /// Replace any component you are unsatisfied with with a custom Widget, build using
+  /// Replace any component you are unsatisfied with with a custom Widget, built using
   /// these builders.
   /// The minimum setup is providing [ChatsListTileBuilders.groupAvatarBuilder].
   final ChatsListTileBuilders builders;

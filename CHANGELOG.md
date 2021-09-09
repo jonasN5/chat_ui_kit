@@ -1,3 +1,8 @@
+## [1.3.0] - 09/09/2021
+
+* Added test coverage on all important parts
+* Updated dependencies
+
 ## [1.2.4] - 14/07/2021
 
 * Migrated example app to null safety

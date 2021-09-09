@@ -1,6 +1,6 @@
 import 'package:chat_ui_kit/src/utils/enums.dart';
 
-/// A wrapper called every time an item is either selected or unselected
+/// A wrapper called every time an item is either selected or unselected.
 class SelectionEvent<T> {
   final SelectionType type;
 

@@ -163,6 +163,8 @@ class _MessageInputState extends State<MessageInput>
   void dispose() {
     _animationControllerCheckMark.dispose();
     _animationControllerSend.dispose();
+    // Cancel any timer still running at this point.
+    _timer?.cancel();
     super.dispose();
   }
 }
