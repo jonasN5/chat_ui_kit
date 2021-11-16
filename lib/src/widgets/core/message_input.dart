@@ -60,7 +60,8 @@ class MessageInput extends StatefulWidget {
       required this.textController,
       required this.sendCallback,
       this.typingCallback,
-      this.focusNode})
+      this.focusNode,
+      this.maxLines})
       : super(key: key);
 
   /// Called when the user sends a (non empty) message
@@ -70,6 +71,7 @@ class MessageInput extends StatefulWidget {
   final Function(TypingEvent event)? typingCallback;
   final TextEditingController textController;
   final FocusNode? focusNode;
+  final int? maxLines;
 
   @override
   _MessageInputState createState() => _MessageInputState();
@@ -142,8 +144,10 @@ class _MessageInputState extends State<MessageInput>
               children: [
                 Expanded(
                     child: TextField(
-                        controller: textController,
-                        focusNode: widget.focusNode)),
+                  controller: textController,
+                  focusNode: widget.focusNode,
+                  maxLines: widget.maxLines,
+                )),
                 Padding(
                     padding: EdgeInsets.only(left: 8),
                     child: RaisedButton(
