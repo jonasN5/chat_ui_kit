@@ -22,7 +22,7 @@ void main() {
       expect(sentMessage, null);
       expect(typingEvent, (e) => e == TypingEvent.start);
 
-      await tester.tap(find.byType(RaisedButton));
+      await tester.tap(find.byType(ElevatedButton));
       // Required for the timer
       await tester.pumpAndSettle(const Duration(seconds: 1));
       expect(sentMessage, 'test text');

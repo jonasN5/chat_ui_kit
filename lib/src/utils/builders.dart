@@ -1,5 +1,4 @@
 import 'package:chat_ui_kit/chat_ui_kit.dart';
-import 'package:chat_ui_kit/src/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 /// Builder called to construct parts of the [ChatsListTile] widget.

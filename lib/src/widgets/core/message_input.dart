@@ -150,7 +150,7 @@ class _MessageInputState extends State<MessageInput>
                 )),
                 Padding(
                     padding: EdgeInsets.only(left: 8),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                         onPressed: sendMessage,
                         child: Stack(alignment: Alignment.center, children: [
                           ScaleTransition(

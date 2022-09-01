@@ -28,9 +28,7 @@ class ChatMessageImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget _image = message.url == null
-        ? Container()
-        : message.url.startsWith('/')
+    final Widget _image = message.url.startsWith('/')
             ? Image.file(File(message.url),
                 errorBuilder: (_, e, s) => Icon(Icons.broken_image))
             : Image.network(message.url,
