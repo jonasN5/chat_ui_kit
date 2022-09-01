@@ -141,7 +141,7 @@ class _ChatsScreenSate extends State<ChatsScreen> {
             appUserId: _model.localUser.id,
             scrollHandler: handleScrollEvent,
             groupAvatarStyle: GroupAvatarStyle(
-                withSeparator: true, separatorColor: Colors.white),
+                mode: GroupAvatarMode.stackedCircles, stackedBorder: Border.all(color: Colors.white, width: 2.0)),
             builders: ChatsListTileBuilders(
                 groupAvatarBuilder:
                     (context, imageIndex, itemIndex, size, item) {

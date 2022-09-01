@@ -1,3 +1,8 @@
+## [1.4.0] - 01/09/2022
+
+* Upgrade to Flutter 3.0 (thnx to https://github.com/xpointsolution)
+* Updated dependencies (thnx to https://github.com/xpointsolution)
+
 ## [1.3.0] - 09/09/2021
 
 * Added test coverage on all important parts
