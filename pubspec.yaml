@@ -1,6 +1,6 @@
 name: chat_ui_kit
 description: A complete Flutter chat UI kit which provides you with a base structure as well as a set of tools that allow you to quickly build up a modern chat UI.
-version: 1.4.0
+version: 1.4.1
 homepage: https://github.com/themadmrj/chat_ui_kit
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  implicitly_animated_reorderable_list: ^0.4.0
+  implicitly_animated_reorderable_list_2: ^0.5.0
   intl: ^0.17.0
   functional_widget_annotation: ^0.10.0
   just_audio: ^0.9.10 #play audio files
