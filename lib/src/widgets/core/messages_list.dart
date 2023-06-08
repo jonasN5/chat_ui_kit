@@ -7,7 +7,7 @@ import 'package:chat_ui_kit/src/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart' as reordered2;
 import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
 
 import 'package:chat_ui_kit/src/models/message_base.dart';
@@ -207,7 +207,7 @@ class _MessagesListState<T extends MessageBase> extends State<MessagesList<T>> {
           if (widget.scrollHandler != null) widget.scrollHandler!.call(scroll);
           return false;
         },
-        child: ImplicitlyAnimatedList<T>(
+        child: reordered2.ImplicitlyAnimatedList<T>(
             physics: widget.style?.physics,
             // The current _items in the list.
             reverse: true,

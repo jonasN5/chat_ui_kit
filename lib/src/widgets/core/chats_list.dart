@@ -2,7 +2,7 @@ import 'package:chat_ui_kit/src/styling/chats_list_style.dart';
 import 'package:chat_ui_kit/src/utils/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
+import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart' as reordered2;
 import 'package:implicitly_animated_reorderable_list_2/transitions.dart';
 
 import 'package:chat_ui_kit/src/models/chat_base.dart';
@@ -96,7 +96,7 @@ class _ChatsListState<T extends ChatBase> extends State<ChatsList<T>> {
           if (widget.scrollHandler != null) widget.scrollHandler!.call(scroll);
           return false;
         },
-        child: ImplicitlyAnimatedList<T>(
+        child: reordered2.ImplicitlyAnimatedList<T>(
             padding: widget.chatsListStyle?.padding,
             physics: widget.chatsListStyle?.physics,
             // The current items in the list.
